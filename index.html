@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Examen Civique — Entraînement en ligne</title>
+<style>
+  :root{
+    --bg1:#0A0A14; --bg2:#140D26; --bg3:#0A0F1F;
+    --gold1:#C9A84D; --gold2:#E8C97A; --gold3:#A87829;
+    --cream:#F2EBE0; --blue:#7A9CBC; --green:#6EE8AB; --red:#FCA3A3;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-font-smoothing:antialiased;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--cream); min-height:100vh;
+    background:
+      radial-gradient(1200px 800px at 80% -10%, rgba(201,168,77,.10), transparent 60%),
+      linear-gradient(135deg,var(--bg1),var(--bg2) 55%,var(--bg3));
+    background-attachment:fixed;
+  }
+  .serif{font-family:Georgia,"Times New Roman",serif;}
+  .gold{background:linear-gradient(120deg,#F2EBE0,var(--gold1),var(--gold2));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .wrap{max-width:640px;margin:0 auto;padding:0 18px;}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+  .hidden{display:none !important;}
+
+  /* lang bar */
+  .langbar{display:flex;gap:6px;overflow-x:auto;padding:14px 18px;-ms-overflow-style:none;scrollbar-width:none;}
+  .langbar::-webkit-scrollbar{display:none;}
+  .lang-chip{white-space:nowrap;font-size:12px;font-weight:500;padding:7px 12px;border-radius:99px;
+    background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(242,235,224,.45);}
+  .lang-chip.active{background:rgba(201,168,77,.2);border-color:rgba(201,168,77,.5);color:var(--gold2);}
+
+  /* HOME */
+  .hero{text-align:center;padding:30px 0 18px;}
+  .hero .eyebrow{font-size:11px;letter-spacing:4px;font-weight:700;color:rgba(201,168,77,.85);text-transform:uppercase;margin-bottom:14px;}
+  .hero h1{font-size:40px;font-weight:900;line-height:1.06;margin-bottom:12px;}
+  .hero p{color:rgba(242,235,224,.55);font-size:15px;line-height:1.5;max-width:440px;margin:0 auto;}
+  .modes{display:flex;flex-direction:column;gap:12px;padding:24px 0;}
+  .mode-card{display:flex;align-items:center;gap:16px;text-align:left;width:100%;
+    background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:18px;
+    transition:transform .12s ease,border-color .12s ease;}
+  .mode-card:hover{transform:translateY(-2px);border-color:rgba(201,168,77,.4);}
+  .mode-card .ico{font-size:30px;width:54px;height:54px;display:flex;align-items:center;justify-content:center;
+    background:rgba(201,168,77,.1);border:1px solid rgba(201,168,77,.22);border-radius:14px;flex-shrink:0;}
+  .mode-card .mt{font-size:18px;font-weight:800;}
+  .mode-card .ms{font-size:13px;color:rgba(242,235,224,.5);margin-top:2px;}
+  .mode-card .arr{margin-left:auto;color:var(--gold1);font-size:20px;}
+  .home-info{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:16px 18px;margin-bottom:30px;}
+  .home-info .row{display:flex;gap:9px;align-items:flex-start;font-size:13px;color:rgba(242,235,224,.6);padding:5px 0;}
+  .home-info .row b{color:var(--gold1);}
+
+  /* QUIZ */
+  .qhead{display:flex;align-items:center;gap:10px;padding:10px 18px 6px;}
+  .qquit{font-size:12px;color:rgba(255,255,255,.45);padding:7px 11px;border:1px solid rgba(255,255,255,.08);border-radius:10px;background:rgba(255,255,255,.05);}
+  .qbar-wrap{flex:1;}
+  .qbar{height:4px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden;}
+  .qbar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--gold1),var(--gold2));transition:width .3s ease;}
+  .qbar-meta{display:flex;justify-content:space-between;font-size:11px;margin-top:5px;color:rgba(255,255,255,.35);}
+  .qbar-meta b{color:var(--gold1);}
+  .qtimer{font-family:ui-monospace,Menlo,monospace;font-size:16px;font-weight:700;border:1px solid rgba(201,168,77,.3);border-radius:11px;padding:6px 10px;text-align:center;min-width:64px;}
+  .qtimer span{display:block;font-size:7px;letter-spacing:1px;color:rgba(255,255,255,.3);}
+  .cat{display:inline-block;font-size:9px;letter-spacing:2px;font-weight:700;color:var(--gold1);background:rgba(255,255,255,.05);
+    border:1px solid rgba(201,168,77,.2);padding:5px 11px;border-radius:99px;text-transform:uppercase;margin-bottom:12px;}
+  .cat.situ{color:#E8D14A;background:rgba(232,209,74,.08);border-color:rgba(232,209,74,.25);}
+  .qcard{background:rgba(255,255,255,.032);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:18px;margin-bottom:14px;}
+  .qtop{display:flex;align-items:flex-start;gap:10px;}
+  .qfr{font-size:19px;font-weight:600;line-height:1.35;color:var(--cream);flex:1;}
+  .qtr{font-size:14px;font-style:italic;color:var(--blue);margin-top:11px;padding-top:11px;border-top:1px solid rgba(255,255,255,.08);line-height:1.4;}
+  .speak{flex-shrink:0;width:38px;height:38px;border-radius:11px;background:rgba(201,168,77,.12);border:1px solid rgba(201,168,77,.3);
+    display:flex;align-items:center;justify-content:center;font-size:17px;color:var(--gold2);transition:background .12s;}
+  .speak:hover{background:rgba(201,168,77,.25);}
+  .speak.playing{background:var(--gold2);color:#1a1306;}
+  .speak.sm{width:30px;height:30px;font-size:14px;border-radius:9px;}
+  .qtr-row{display:flex;align-items:flex-start;gap:9px;margin-top:11px;padding-top:11px;border-top:1px solid rgba(255,255,255,.08);}
+  .qtr-row .qtr,.qtr-row .etr{flex:1;margin:0;padding:0;border:none;}
+
+  /* PAYWALL */
+  .pw{padding:30px 0 40px;text-align:center;}
+  .pw .eyebrow{font-size:11px;letter-spacing:4px;font-weight:700;color:rgba(201,168,77,.55);text-transform:uppercase;margin-bottom:10px;}
+  .pw h1{font-size:40px;font-weight:900;line-height:1.05;margin-bottom:12px;}
+  .pw .sub{color:rgba(242,235,224,.5);font-size:15px;margin-bottom:24px;}
+  .pw-feats{text-align:left;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:18px;margin-bottom:22px;}
+  .pw-feats .f{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:rgba(242,235,224,.62);padding:6px 0;}
+  .pw-feats .f span{color:var(--gold1);flex-shrink:0;}
+  .pw .price-note{font-size:12px;color:rgba(242,235,224,.35);margin-top:14px;line-height:1.5;}
+
+  /* INTRO / ONBOARDING */
+  .intro{text-align:center;padding:26px 0 44px;}
+  .intro .art{display:flex;justify-content:center;margin:8px 0 22px;}
+  .intro .art svg{filter:drop-shadow(0 18px 40px rgba(201,168,77,.22));}
+  .intro .eyebrow{font-size:11px;letter-spacing:4px;font-weight:700;color:rgba(201,168,77,.85);text-transform:uppercase;margin-bottom:14px;}
+  .intro h1{font-size:42px;font-weight:900;line-height:1.05;margin-bottom:14px;}
+  .intro .lead{color:rgba(242,235,224,.6);font-size:16px;line-height:1.55;max-width:480px;margin:0 auto 26px;}
+  .intro-pts{text-align:left;max-width:440px;margin:0 auto 28px;display:flex;flex-direction:column;gap:12px;}
+  .intro-pts .p{display:flex;gap:13px;align-items:flex-start;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:14px 16px;}
+  .intro-pts .p .ic{font-size:22px;flex-shrink:0;line-height:1.2;}
+  .intro-pts .p .tx b{display:block;font-size:15px;margin-bottom:2px;}
+  .intro-pts .p .tx span{font-size:13px;color:rgba(242,235,224,.5);line-height:1.45;}
+  .dl-title{font-size:13px;letter-spacing:1px;text-transform:uppercase;color:rgba(242,235,224,.4);font-weight:700;margin:6px 0 12px;}
+
+  /* STORE BADGES */
+  .badges{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .store-badge{display:flex;align-items:center;gap:11px;text-decoration:none;padding:10px 18px;border-radius:13px;
+    background:#000;border:1px solid rgba(255,255,255,.16);transition:transform .14s ease,border-color .14s ease;min-width:176px;}
+  .store-badge:hover{transform:translateY(-2px);border-color:rgba(201,168,77,.55);}
+  .store-badge .txt{display:flex;flex-direction:column;line-height:1.15;text-align:left;}
+  .store-badge .small{font-size:9.5px;color:#cfcfcf;letter-spacing:.3px;}
+  .store-badge .big{font-size:17px;font-weight:600;color:#fff;}
+  .badges-note{font-size:11px;color:rgba(242,235,224,.3);margin-top:12px;}
+  .home-dl{margin:26px 0 6px;text-align:center;}
+  .opts{display:flex;flex-direction:column;gap:9px;margin-bottom:14px;}
+  .opt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:13px 14px;border-radius:13px;font-size:14px;line-height:1.4;
+    border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.04);color:rgba(217,210,200,.85);transition:all .18s ease;}
+  .opt .lbl{width:26px;height:26px;flex-shrink:0;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;
+    background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.1);}
+  .opt.correct{background:rgba(110,232,171,.1);border-color:rgba(110,232,171,.5);color:var(--green);}
+  .opt.correct .lbl{background:rgba(110,232,171,.2);border-color:rgba(110,232,171,.5);color:var(--green);}
+  .opt.wrong{background:rgba(252,163,163,.1);border-color:rgba(252,163,163,.45);color:var(--red);}
+  .opt.wrong .lbl{background:rgba(252,163,163,.2);border-color:rgba(252,163,163,.45);color:var(--red);}
+  .opt.faded{opacity:.4;}
+  .opt:disabled{cursor:default;}
+  .expl{border-radius:14px;padding:16px;margin-bottom:14px;}
+  .expl.good{background:rgba(110,232,171,.07);border:1px solid rgba(110,232,171,.2);}
+  .expl.bad{background:rgba(122,156,188,.07);border:1px solid rgba(122,156,188,.2);}
+  .expl .eh{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:9px;display:flex;gap:7px;align-items:center;}
+  .expl.good .eh{color:rgba(110,232,171,.9);}
+  .expl.bad .eh{color:var(--blue);}
+  .expl .etext{font-size:13px;line-height:1.5;color:rgba(217,210,200,.85);}
+  .expl .etr{font-size:13px;font-style:italic;color:var(--blue);margin-top:9px;padding-top:9px;border-top:1px solid rgba(255,255,255,.08);line-height:1.5;}
+  .btn-primary{width:100%;text-align:center;font-size:16px;font-weight:800;color:#1a1306;padding:16px;border-radius:14px;
+    background:linear-gradient(90deg,var(--gold1),var(--gold2));box-shadow:0 8px 20px rgba(201,168,77,.3);}
+  .pad{padding:0 18px 40px;}
+  .qlangrow{display:flex;gap:6px;overflow-x:auto;padding:6px 18px 12px;scrollbar-width:none;}
+  .qlangrow::-webkit-scrollbar{display:none;}
+
+  /* RESULT */
+  .result{text-align:center;padding:40px 0 20px;}
+  .rscore{font-size:78px;font-weight:900;line-height:1;}
+  .rverdict{font-size:22px;font-weight:800;margin:10px 0 4px;}
+  .rverdict.pass{color:var(--green);}
+  .rverdict.fail{color:var(--red);}
+  .rsub{color:rgba(242,235,224,.5);font-size:14px;margin-bottom:24px;}
+  .rstats{display:flex;gap:10px;margin-bottom:26px;}
+  .rstat{flex:1;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:14px;}
+  .rstat .n{font-size:24px;font-weight:800;}
+  .rstat .l{font-size:11px;color:rgba(242,235,224,.45);margin-top:2px;}
+  .review-h{font-size:13px;letter-spacing:2px;text-transform:uppercase;color:rgba(242,235,224,.4);text-align:left;margin:8px 0 12px;font-weight:700;}
+  .rev{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:14px;margin-bottom:10px;text-align:left;}
+  .rev .rq{font-size:14px;font-weight:600;margin-bottom:8px;}
+  .rev .ra{font-size:12.5px;padding:3px 0;}
+  .rev .ra.ok{color:var(--green);}
+  .rev .ra.no{color:var(--red);}
+  .ghost{width:100%;text-align:center;font-size:14px;color:rgba(242,235,224,.5);padding:13px;margin-top:8px;}
+
+  /* LEARNING */
+  .topic{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:rgba(255,255,255,.035);
+    border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:16px;margin-bottom:11px;transition:transform .12s,border-color .12s;}
+  .topic:hover{transform:translateY(-2px);border-color:rgba(201,168,77,.4);}
+  .topic .tt{font-size:16px;font-weight:700;}
+  .topic .ts{font-size:12.5px;color:rgba(242,235,224,.5);margin-top:3px;line-height:1.4;}
+  .topic .arr{margin-left:auto;color:var(--gold1);font-size:18px;}
+  .section{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:18px;margin-bottom:14px;}
+  .section .sh{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+  .section .st{font-size:17px;font-weight:700;flex:1;}
+  .section .sx{font-size:14px;line-height:1.6;color:rgba(217,210,200,.82);white-space:pre-wrap;}
+  .backlink{display:inline-flex;align-items:center;gap:6px;font-size:14px;color:var(--gold1);padding:14px 18px;}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script src="data.js"></script>
+<script>
+const D = window.QUIZ_DATA;
+const LANGS = [
+  {id:'fr',flag:'🇫🇷',name:'Français',loc:'fr-FR'},
+  {id:'ru',flag:'🇷🇺',name:'Русский',loc:'ru-RU'},
+  {id:'uk',flag:'🇺🇦',name:'Українська',loc:'uk-UA'},
+  {id:'ar',flag:'🇦🇪',name:'العربية',loc:'ar-SA'},
+  {id:'tr',flag:'🇹🇷',name:'Türkçe',loc:'tr-TR'},
+  {id:'pt',flag:'🇵🇹',name:'Português',loc:'pt-PT'},
+  {id:'en',flag:'🇬🇧',name:'English',loc:'en-US'},
+];
+
+// ---- i18n for UI chrome ----
+const T = {
+  tagline:{fr:"Entraînez-vous à l'examen civique français",ru:"Подготовка к французскому гражданскому экзамену",uk:"Підготовка до французького громадянського іспиту",ar:"التحضير للامتحان المدني الفرنسي",tr:"Fransız vatandaşlık sınavına hazırlık",pt:"Prepare-se para o exame cívico francês",en:"Train for the French civic exam"},
+  start:{fr:"Commencer",ru:"Начать",uk:"Почати",ar:"ابدأ",tr:"Başla",pt:"Começar",en:"Start"},
+  quit:{fr:"Quitter",ru:"Выйти",uk:"Вийти",ar:"خروج",tr:"Çık",pt:"Sair",en:"Quit"},
+  question:{fr:"Question",ru:"Вопрос",uk:"Питання",ar:"سؤال",tr:"Soru",pt:"Pergunta",en:"Question"},
+  correct:{fr:"correctes",ru:"верно",uk:"правильно",ar:"صحيح",tr:"doğru",pt:"corretas",en:"correct"},
+  remaining:{fr:"RESTANT",ru:"ОСТАЛОСЬ",uk:"ЗАЛИШИЛОСЬ",ar:"المتبقي",tr:"KALAN",pt:"RESTANTE",en:"LEFT"},
+  next:{fr:"Question suivante",ru:"Следующий вопрос",uk:"Наступне питання",ar:"السؤال التالي",tr:"Sonraki soru",pt:"Próxima pergunta",en:"Next question"},
+  seeResults:{fr:"Voir les résultats",ru:"Показать результаты",uk:"Показати результати",ar:"عرض النتائج",tr:"Sonuçları gör",pt:"Ver resultados",en:"See results"},
+  good:{fr:"Bonne réponse !",ru:"Правильный ответ!",uk:"Правильна відповідь!",ar:"إجابة صحيحة!",tr:"Doğru cevap!",pt:"Resposta correta!",en:"Correct answer!"},
+  expl:{fr:"Explication",ru:"Объяснение",uk:"Пояснення",ar:"شرح",tr:"Açıklama",pt:"Explicação",en:"Explanation"},
+  result:{fr:"Résultat",ru:"Результат",uk:"Результат",ar:"النتيجة",tr:"Sonuç",pt:"Resultado",en:"Result"},
+  passed:{fr:"Réussi !",ru:"Сдано!",uk:"Складено!",ar:"ناجح!",tr:"Başarılı!",pt:"Aprovado!",en:"Passed!"},
+  failed:{fr:"Échoué",ru:"Не сдано",uk:"Не складено",ar:"رسب",tr:"Başarısız",pt:"Reprovado",en:"Failed"},
+  passInfo:{fr:"Seuil de réussite : 32/40 (80%)",ru:"Порог: 32/40 (80%)",uk:"Поріг: 32/40 (80%)",ar:"الحد: 32/40 (80%)",tr:"Eşik: 32/40 (80%)",pt:"Limite: 32/40 (80%)",en:"Pass mark: 32/40 (80%)"},
+  good_n:{fr:"correctes",ru:"верных",uk:"правильних",ar:"صحيحة",tr:"doğru",pt:"corretas",en:"correct"},
+  bad_n:{fr:"erreurs",ru:"ошибок",uk:"помилок",ar:"أخطاء",tr:"hata",pt:"erros",en:"errors"},
+  total_n:{fr:"questions",ru:"вопросов",uk:"питань",ar:"أسئلة",tr:"soru",pt:"perguntas",en:"questions"},
+  retry:{fr:"Recommencer",ru:"Заново",uk:"Спочатку",ar:"إعادة",tr:"Tekrar",pt:"Recomeçar",en:"Restart"},
+  home:{fr:"Accueil",ru:"На главную",uk:"На головну",ar:"الرئيسية",tr:"Ana sayfa",pt:"Início",en:"Home"},
+  review:{fr:"Vos erreurs",ru:"Ваши ошибки",uk:"Ваші помилки",ar:"أخطاؤك",tr:"Hatalarınız",pt:"Seus erros",en:"Your mistakes"},
+  yourAns:{fr:"Votre réponse",ru:"Ваш ответ",uk:"Ваша відповідь",ar:"إجابتك",tr:"Cevabınız",pt:"Sua resposta",en:"Your answer"},
+  goodAns:{fr:"Bonne réponse",ru:"Правильный ответ",uk:"Правильна відповідь",ar:"الإجابة الصحيحة",tr:"Doğru cevap",pt:"Resposta correta",en:"Correct answer"},
+  back:{fr:"Retour",ru:"Назад",uk:"Назад",ar:"رجوع",tr:"Geri",pt:"Voltar",en:"Back"},
+  best:{fr:"Meilleur",ru:"Лучший",uk:"Найкращий",ar:"الأفضل",tr:"En iyi",pt:"Melhor",en:"Best"},
+  average:{fr:"Moyenne",ru:"Среднее",uk:"Середній",ar:"المتوسط",tr:"Ortalama",pt:"Média",en:"Average"},
+  tests:{fr:"Tests",ru:"Тестов",uk:"Тестів",ar:"اختبارات",tr:"Test",pt:"Testes",en:"Tests"},
+  myProgress:{fr:"Ma progression",ru:"Мой прогресс",uk:"Мій прогрес",ar:"تقدمي",tr:"İlerlemem",pt:"Meu progresso",en:"My progress"},
+};
+function t(key){ return (T[key] && (T[key][state.lang]||T[key].fr)) || ''; }
+
+// ---- modes meta ----
+const MODES = {
+  csp:{icon:'📋',title:{fr:'CSP',ru:'CSP',uk:'CSP',ar:'CSP',tr:'CSP',pt:'CSP',en:'CSP'},
+    sub:{fr:'Carte de séjour pluriannuelle',ru:'Многолетний вид на жительство',uk:'Багаторічна посвідка',ar:'بطاقة إقامة متعددة السنوات',tr:'Çok yıllı oturum kartı',pt:'Autorização plurianual',en:'Multi-year residence permit'}},
+  cr:{icon:'🏅',title:{fr:'CR',ru:'CR',uk:'CR',ar:'CR',tr:'CR',pt:'CR',en:'CR'},
+    sub:{fr:'Carte de résident 10 ans',ru:'Карта резидента на 10 лет',uk:'Карта резидента на 10 років',ar:'بطاقة مقيم 10 سنوات',tr:'10 yıllık ikamet kartı',pt:'Cartão de residente 10 anos',en:'10-year resident card'}},
+  learning:{icon:'📖',title:{fr:'Étude',ru:'Обучение',uk:'Навчання',ar:'الدراسة',tr:'Eğitim',pt:'Estudo',en:'Study'},
+    sub:{fr:'Cours officiels par thème',ru:'Официальные уроки по темам',uk:'Офіційні уроки за темами',ar:'دروس رسمية حسب الموضوع',tr:'Konuya göre resmi dersler',pt:'Aulas oficiais por tema',en:'Official lessons by topic'}},
+};
+
+// ============================================================
+//  CONFIGURATION — édite ces 2 lignes
+// ============================================================
+const FREE_LIMIT = 15;                 // questions gratuites par session
+const STRIPE_PAYMENT_LINK = "";        // ← colle ici ton Stripe Payment Link (https://buy.stripe.com/...)
+const PRICE_LABEL = "4,99 €";          // prix affiché sur le paywall
+const APP_STORE_URL   = "";            // ← lien App Store (https://apps.apple.com/app/idXXXXXXXX)
+const GOOGLE_PLAY_URL = "";            // ← lien Google Play (https://play.google.com/store/apps/details?id=com.examencivique.app)
+// ============================================================
+
+// ---- persistence (localStorage) ----
+const LS = { access:'examen_fullaccess', stats:'examen_stats', lang:'examen_lang' };
+const DEFAULT_STATS = { completedTests:0, bestScorePercent:0, lastScorePercent:0, totalAnswered:0, totalCorrect:0 };
+function loadAccess(){ try{ return localStorage.getItem(LS.access)==='1'; }catch(e){ return false; } }
+function grantAccess(){ try{ localStorage.setItem(LS.access,'1'); }catch(e){} state.fullAccess=true; }
+function loadStats(){ try{ return Object.assign({}, DEFAULT_STATS, JSON.parse(localStorage.getItem(LS.stats))||{}); }catch(e){ return Object.assign({}, DEFAULT_STATS); } }
+function saveStats(){ try{ localStorage.setItem(LS.stats, JSON.stringify(state.stats)); }catch(e){} }
+function loadLang(){ try{ return localStorage.getItem(LS.lang)||'fr'; }catch(e){ return 'fr'; } }
+function avgPercent(){ return state.stats.totalAnswered>0 ? Math.round(state.stats.totalCorrect/state.stats.totalAnswered*100) : 0; }
+
+// ---- state ----
+const state = {
+  view:'home', lang:'fr', mode:'csp',
+  session:[], idx:0, score:0, answers:[], selected:null, showExpl:false,
+  timeLeft:45*60, timer:null, topic:null,
+  fullAccess:false, stats:Object.assign({}, DEFAULT_STATS),
+};
+
+function ml(obj){ return obj[state.lang]||obj.fr; }
+function curLang(){ return LANGS.find(l=>l.id===state.lang)||LANGS[0]; }
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// ---- translation lookup (mirrors the iOS app) ----
+function trans(q){
+  if(state.lang==='fr') return {question:q.question, options:{}, explanation:q.explanation};
+  const d = D.translations[state.lang] && D.translations[state.lang][q.question];
+  if(d) return d;
+  return {question:q.question, options:{}, explanation:q.explanation};
+}
+function optText(q,fr){
+  if(state.lang==='fr') return fr;
+  const d = D.translations[state.lang] && D.translations[state.lang][q.question];
+  return (d && d.options[fr]) || fr;
+}
+
+// ---- TTS ----
+let voices=[];
+function loadVoices(){ voices = window.speechSynthesis ? speechSynthesis.getVoices() : []; }
+if(window.speechSynthesis){ loadVoices(); speechSynthesis.onvoiceschanged = loadVoices; }
+let speakingEl=null;
+function speak(text, loc, el){
+  if(!window.speechSynthesis || !text) return;
+  // n'annule que si quelque chose est en cours (évite la course cancel→speak)
+  if(speechSynthesis.speaking || speechSynthesis.pending) speechSynthesis.cancel();
+  if(speakingEl){ speakingEl.classList.remove('playing'); }
+  if(!voices.length) loadVoices();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = loc; u.rate = 0.92;
+  const v = voices.find(v=>v.lang===loc) || voices.find(v=>v.lang.slice(0,2)===loc.slice(0,2));
+  if(v) u.voice=v;
+  if(el){ el.classList.add('playing'); speakingEl=el; u.onend=u.onerror=()=>el.classList.remove('playing'); }
+  // appel direct dans le geste utilisateur (requis par Safari)
+  speechSynthesis.speak(u);
+}
+// Lecteurs dédiés (évitent d'injecter le texte dans onclick)
+function ttsFR(el){ const q=state.session[state.idx]; if(q) speak(q.question,'fr-FR',el); }
+function ttsTransQ(el){ const q=state.session[state.idx]; if(q){ const d=trans(q); speak(d.question, curLang().loc, el); } }
+function ttsTransExpl(el){ const q=state.session[state.idx]; if(q){ const d=trans(q); speak(d.explanation, curLang().loc, el); } }
+function ttsSection(i, el){ const s=D.learning[state.topic] && D.learning[state.topic].sections[i]; if(s) speak(ml(s.title)+'. '+ml(s.text), curLang().loc, el); }
+
+// =================== VIEWS ===================
+const app = document.getElementById('app');
+function render(){
+  if(state.view==='intro') renderIntro();
+  else if(state.view==='home') renderHome();
+  else if(state.view==='quiz') renderQuiz();
+  else if(state.view==='result') renderResult();
+  else if(state.view==='learnList') renderLearnList();
+  else if(state.view==='learnTopic') renderLearnTopic();
+  window.scrollTo(0,0);
+}
+
+function langBar(){
+  return `<div class="langbar">${LANGS.map(l=>
+    `<button class="lang-chip ${l.id===state.lang?'active':''}" onclick="setLang('${l.id}')">${l.flag} ${l.name}</button>`).join('')}</div>`;
+}
+function setLang(id){ state.lang=id; try{localStorage.setItem(LS.lang,id);}catch(e){} render(); }
+
+function renderHome(){
+  app.innerHTML = langBar() + `<div class="wrap">
+    <div class="hero">
+      <div class="eyebrow">Examen Civique</div>
+      <h1 class="serif gold">Réussissez votre<br>examen civique</h1>
+      <p>${esc(ml(T.tagline))}</p>
+    </div>
+    <div class="home-info">
+      <div class="row"><b>🏛️</b> ${esc(ml({fr:'Questions 100% officielles du Ministère de l’Intérieur',ru:'Официальные вопросы Министерства внутренних дел',uk:'Офіційні питання Міністерства внутрішніх справ',ar:'أسئلة رسمية من وزارة الداخلية',tr:'İçişleri Bakanlığı resmi soruları',pt:'Perguntas oficiais do Ministério do Interior',en:'Official questions from the Ministry of the Interior'}))}</div>
+      <div class="row"><b>⏱️</b> 40 questions · 45 min · ${esc(ml(T.passInfo))}</div>
+      <div class="row"><b>🌍</b> ${esc(ml({fr:'Traduction locale en 6 langues + audio',ru:'Перевод на 6 языков + озвучка',uk:'Переклад 6 мовами + озвучення',ar:'ترجمة إلى 6 لغات + صوت',tr:'6 dilde çeviri + sesli',pt:'Tradução em 6 idiomas + áudio',en:'Translation in 6 languages + audio'}))}</div>
+    </div>
+    ${state.stats.completedTests>0?`
+    <div class="review-h" style="margin:4px 0 10px">${esc(t('myProgress'))}</div>
+    <div class="rstats" style="margin-bottom:24px">
+      <div class="rstat"><div class="n gold">${state.stats.bestScorePercent}%</div><div class="l">${esc(t('best'))}</div></div>
+      <div class="rstat"><div class="n">${avgPercent()}%</div><div class="l">${esc(t('average'))}</div></div>
+      <div class="rstat"><div class="n">${state.stats.completedTests}</div><div class="l">${esc(t('tests'))}</div></div>
+    </div>`:''}
+    ${state.fullAccess?`<div style="text-align:center;font-size:13px;color:var(--green);margin-bottom:18px">✓ ${esc(ml({fr:'Accès complet activé',ru:'Полный доступ активирован',uk:'Повний доступ активовано',ar:'تم تفعيل الوصول الكامل',tr:'Tam erişim etkin',pt:'Acesso completo ativado',en:'Full access enabled'}))}</div>`:''}
+    <div class="modes">
+      ${Object.keys(MODES).map(m=>`
+        <button class="mode-card" onclick="${m==='learning'?'openLearning()':`startQuiz('${m}')`}">
+          <span class="ico">${MODES[m].icon}</span>
+          <span><span class="mt">${esc(ml(MODES[m].title))}</span><br><span class="ms">${esc(ml(MODES[m].sub))}</span></span>
+          <span class="arr">→</span>
+        </button>`).join('')}
+    </div>
+    <div class="home-dl">
+      <div class="dl-title">${esc(ml(INTRO.dl))}</div>
+      ${storeBadges()}
+    </div>
+    <div style="height:24px"></div>
+  </div>`;
+}
+
+// ---------- INTRO / ONBOARDING ----------
+const INTRO = {
+  eyebrow:{fr:"PRÉPARATION CIVIQUE",ru:"ГРАЖДАНСКИЙ ЭКЗАМЕН",uk:"ГРОМАДЯНСЬКИЙ ІСПИТ",ar:"الامتحان المدني",tr:"VATANDAŞLIK SINAVI",pt:"EXAME CÍVICO",en:"CIVIC EXAM"},
+  title:{fr:"Réussissez votre examen civique",ru:"Сдайте гражданский экзамен",uk:"Складіть громадянський іспит",ar:"اجتز الامتحان المدني",tr:"Vatandaşlık sınavını geç",pt:"Aprove no exame cívico",en:"Pass your civic exam"},
+  lead:{fr:"Entraînez-vous gratuitement avec les questions officielles, comprenez chaque réponse et révisez dans votre langue — directement dans votre navigateur.",ru:"Готовьтесь бесплатно по официальным вопросам, понимайте каждый ответ и учитесь на своём языке — прямо в браузере.",uk:"Готуйтеся безкоштовно за офіційними питаннями, розумійте кожну відповідь і навчайтеся своєю мовою — прямо у браузері.",ar:"تدرب مجانا على الأسئلة الرسمية، افهم كل إجابة وراجع بلغتك — مباشرة في متصفحك.",tr:"Resmi sorularla ücretsiz çalışın, her cevabı anlayın ve kendi dilinizde tekrar edin — doğrudan tarayıcıda.",pt:"Pratique gratuitamente com perguntas oficiais, entenda cada resposta e estude no seu idioma — direto no navegador.",en:"Practice for free with official questions, understand every answer and study in your language — right in your browser."},
+  pts:{
+    fr:[["🏛️","Questions 100% officielles","Fidèles à l'examen du Ministère de l'Intérieur (CSP & CR)."],["🌍","Traduit en 6 langues + audio","Question, réponses et cours traduits, avec lecture audio."],["💡","Chaque réponse expliquée","Comprenez la règle, pas seulement la bonne case."],["📈","Suivez votre progression","Meilleur score, moyenne et tests enregistrés."]],
+    ru:[["🏛️","100% официальные вопросы","Соответствуют экзамену МВД (CSP и CR)."],["🌍","Перевод на 6 языков + аудио","Вопросы, ответы и уроки с озвучкой."],["💡","Каждый ответ объяснён","Понимаете правило, а не просто верную клетку."],["📈","Отслеживайте прогресс","Лучший и средний результат, история тестов."]],
+    uk:[["🏛️","100% офіційні питання","Відповідають іспиту МВС (CSP і CR)."],["🌍","Переклад 6 мовами + аудіо","Питання, відповіді й уроки з озвученням."],["💡","Кожна відповідь пояснена","Розумієте правило, а не лише правильну клітинку."],["📈","Стежте за прогресом","Найкращий і середній результат, історія тестів."]],
+    ar:[["🏛️","أسئلة رسمية 100%","مطابقة لامتحان وزارة الداخلية (CSP و CR)."],["🌍","ترجمة إلى 6 لغات + صوت","أسئلة وإجابات ودروس مترجمة مع قراءة صوتية."],["💡","شرح لكل إجابة","افهم القاعدة وليس فقط الخانة الصحيحة."],["📈","تابع تقدمك","أفضل نتيجة ومتوسط وسجل الاختبارات."]],
+    tr:[["🏛️","%100 resmi sorular","İçişleri Bakanlığı sınavına uygun (CSP ve CR)."],["🌍","6 dilde çeviri + ses","Soru, cevap ve dersler sesli çeviriyle."],["💡","Her cevap açıklanır","Doğru kutuyu değil kuralı anlayın."],["📈","İlerlemenizi izleyin","En iyi ve ortalama skor, test geçmişi."]],
+    pt:[["🏛️","Perguntas 100% oficiais","Fiéis ao exame do Ministério do Interior (CSP e CR)."],["🌍","Tradução em 6 idiomas + áudio","Perguntas, respostas e aulas com áudio."],["💡","Cada resposta explicada","Entenda a regra, não só a opção certa."],["📈","Acompanhe o progresso","Melhor e média de pontuação, histórico."]],
+    en:[["🏛️","100% official questions","True to the Ministry of the Interior exam (CSP & CR)."],["🌍","Translated in 6 languages + audio","Questions, answers and lessons with audio."],["💡","Every answer explained","Understand the rule, not just the right box."],["📈","Track your progress","Best and average score, test history."]],
+  },
+  cta:{fr:"Commencer",ru:"Начать",uk:"Почати",ar:"ابدأ",tr:"Başla",pt:"Começar",en:"Get started"},
+  dl:{fr:"Aussi disponible en application",ru:"Также доступно в приложении",uk:"Також доступно в застосунку",ar:"متوفر أيضا كتطبيق",tr:"Uygulama olarak da mevcut",pt:"Também disponível como app",en:"Also available as an app"},
+  skip:{fr:"Passer",ru:"Пропустить",uk:"Пропустити",ar:"تخطي",tr:"Geç",pt:"Pular",en:"Skip"},
+};
+function storeBadges(){
+  const apple = `<a class="store-badge" href="${APP_STORE_URL||'#'}" ${APP_STORE_URL?'target="_blank" rel="noopener"':'onclick="badgeStub(event)"'}>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M16.365 1.43c0 1.14-.42 2.22-1.17 3.04-.78.86-2.05 1.52-3.1 1.44-.13-1.07.43-2.22 1.13-2.96.78-.83 2.13-1.46 3.14-1.52zM20.5 17.05c-.55 1.27-.82 1.83-1.53 2.95-.99 1.56-2.38 3.5-4.1 3.51-1.53.02-1.92-.99-4-.98-2.07.01-2.5 1-4.03.98-1.72-.02-3.04-1.77-4.03-3.33-2.77-4.36-3.06-9.47-1.35-12.19 1.21-1.92 3.13-3.05 4.93-3.05 1.84 0 2.99 1 4.51 1 1.47 0 2.37-1 4.5-1 1.61 0 3.32.88 4.54 2.39-3.99 2.18-3.34 7.87.09 9.72z"/></svg>
+    <span class="txt"><span class="small">${esc(ml({fr:"Télécharger dans l'",ru:"Загрузить в",uk:"Завантажити в",ar:"حمّل من",tr:"İndir:",pt:"Baixar na",en:"Download on the"}))}</span><span class="big">App Store</span></span></a>`;
+  const google = `<a class="store-badge" href="${GOOGLE_PLAY_URL||'#'}" ${GOOGLE_PLAY_URL?'target="_blank" rel="noopener"':'onclick="badgeStub(event)"'}>
+    <svg width="22" height="24" viewBox="0 0 24 24"><path d="M3.6 1.8 13.1 12 3.6 22.2c-.37-.2-.6-.6-.6-1.06V2.86c0-.46.23-.86.6-1.06z" fill="#34A853"/><path d="M16.8 8.7 13.1 12l3.7 3.3 4.05-2.3c.78-.45.78-1.55 0-2L16.8 8.7z" fill="#FBBC04"/><path d="M3.6 1.8c.13-.07.3-.1.45-.1.2 0 .4.06.6.17L17 8.66 13.1 12z" fill="#EA4335"/><path d="M13.1 12 17 15.34 4.65 22.13c-.2.11-.4.17-.6.17-.15 0-.32-.03-.45-.1z" fill="#4285F4"/></svg>
+    <span class="txt"><span class="small">${esc(ml({fr:"DISPONIBLE SUR",ru:"ДОСТУПНО В",uk:"ДОСТУПНО В",ar:"متوفر على",tr:"İNDİR:",pt:"DISPONÍVEL NO",en:"GET IT ON"}))}</span><span class="big">Google Play</span></span></a>`;
+  return `<div class="badges">${apple}${google}</div>`;
+}
+function badgeStub(e){ e.preventDefault(); alert(ml({fr:"Le lien sera ajouté après la publication de l'application.",ru:"Ссылка появится после публикации приложения.",uk:"Посилання з'явиться після публікації застосунку.",ar:"سيُضاف الرابط بعد نشر التطبيق.",tr:"Bağlantı uygulama yayınlandıktan sonra eklenecek.",pt:"O link será adicionado após a publicação do app.",en:"The link will be added after the app is published."})); }
+function heroArt(){
+  return `<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="glow" cx="50%" cy="45%" r="55%">
+        <stop offset="0%" stop-color="#C9A84D" stop-opacity=".30"/><stop offset="100%" stop-color="#C9A84D" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#E8C97A"/><stop offset="100%" stop-color="#A87829"/></linearGradient>
+      <linearGradient id="chk" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#6EE8AB"/><stop offset="100%" stop-color="#3FBF82"/></linearGradient>
+    </defs>
+    <circle cx="100" cy="98" r="92" fill="url(#glow)"/>
+    <!-- cocarde tricolore -->
+    <circle cx="100" cy="96" r="60" fill="none" stroke="url(#ring)" stroke-width="3"/>
+    <circle cx="100" cy="96" r="54" fill="#E0414E"/>
+    <circle cx="100" cy="96" r="38" fill="#F2EBE0"/>
+    <circle cx="100" cy="96" r="22" fill="#2B5CBF"/>
+    <circle cx="100" cy="96" r="22" fill="none" stroke="#ffffff" stroke-opacity=".25" stroke-width="1"/>
+    <!-- badge check -->
+    <circle cx="142" cy="138" r="22" fill="#0A0F1F"/>
+    <circle cx="142" cy="138" r="20" fill="url(#chk)"/>
+    <path d="M133 138l6 6 12-13" stroke="#0A0F1F" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <!-- étoiles -->
+    <g fill="#E8C97A">
+      <path d="M40 46l2.2 5.3 5.8.5-4.4 3.8 1.4 5.7L40 64l-5 3 1.4-5.7-4.4-3.8 5.8-.5z"/>
+      <path d="M164 54l1.6 3.9 4.3.4-3.3 2.8 1 4.2-3.6-2.2-3.6 2.2 1-4.2-3.3-2.8 4.3-.4z" opacity=".8"/>
+      <path d="M54 150l1.3 3.2 3.5.3-2.7 2.3.9 3.4-3-1.8-3 1.8.9-3.4-2.7-2.3 3.5-.3z" opacity=".7"/>
+    </g>
+  </svg>`;
+}
+function renderIntro(){
+  app.innerHTML = `<div class="langbar" style="justify-content:flex-end;padding-bottom:4px"><button class="lang-chip" onclick="finishIntro()">${esc(ml(INTRO.skip))} ✕</button></div>`
+   + langBar()
+   + `<div class="wrap"><div class="intro">
+      <div class="art">${heroArt()}</div>
+      <div class="eyebrow">${esc(ml(INTRO.eyebrow))}</div>
+      <h1 class="serif gold">${esc(ml(INTRO.title))}</h1>
+      <p class="lead">${esc(ml(INTRO.lead))}</p>
+      <div class="intro-pts">
+        ${ml(INTRO.pts).map(p=>`<div class="p"><span class="ic">${p[0]}</span><span class="tx"><b>${esc(p[1])}</b><span>${esc(p[2])}</span></span></div>`).join('')}
+      </div>
+      <button class="btn-primary" onclick="finishIntro()">${esc(ml(INTRO.cta))} →</button>
+      <div class="home-dl">
+        <div class="dl-title">${esc(ml(INTRO.dl))}</div>
+        ${storeBadges()}
+        <div class="badges-note">${esc(ml({fr:"Les liens seront actifs après publication.",ru:"Ссылки заработают после публикации.",uk:"Посилання запрацюють після публікації.",ar:"ستعمل الروابط بعد النشر.",tr:"Bağlantılar yayından sonra çalışacak.",pt:"Os links funcionarão após a publicação.",en:"Links will work after publishing."}))}</div>
+      </div>
+    </div></div>`;
+}
+function finishIntro(){ try{localStorage.setItem('examen_intro_seen','1');}catch(e){} state.view='home'; render(); }
+
+// ---------- QUIZ ----------
+function startQuiz(mode){
+  state.mode=mode;
+  const pool=D.pools[mode];
+  const knowledge=shuffle(pool.knowledge).slice(0,28);
+  const situ=shuffle(pool.situational).slice(0,12);
+  state.session=shuffle(knowledge.concat(situ)).map(q=>({...q,_opts:shuffle(q.options)}));
+  state.idx=0; state.score=0; state.answers=[]; state.selected=null; state.showExpl=false;
+  state.timeLeft=45*60; state.view='quiz';
+  startTimer();
+  render();
+}
+function startTimer(){
+  clearInterval(state.timer);
+  state.timer=setInterval(()=>{
+    state.timeLeft--;
+    if(state.timeLeft<=0){ finish(); return; }
+    const el=document.getElementById('timer'); if(el) el.firstChild.textContent=fmtTime();
+  },1000);
+}
+function fmtTime(){ const m=Math.floor(state.timeLeft/60),s=state.timeLeft%60; return String(m).padStart(2,'0')+':'+String(s).padStart(2,'0'); }
+function timerColor(){ if(state.timeLeft<300)return 'var(--red)'; if(state.timeLeft<600)return '#E8D14A'; return 'var(--gold1)'; }
+
+function renderQuiz(){
+  // Paywall: 15 questions gratuites, puis accès complet (comme l'app iOS)
+  if(!state.fullAccess && state.answers.length>=FREE_LIMIT){ renderPaywall(); return; }
+  const q=state.session[state.idx];
+  const tq=trans(q);
+  const isFr=state.lang==='fr';
+  const isSitu=q.category && q.category.toLowerCase().indexOf('situation')>=0;
+  const rtl = state.lang==='ar';
+  const progress=(state.idx/state.session.length)*100;
+
+  let optsHtml=q._opts.map((opt,i)=>{
+    let cls='opt';
+    if(state.selected!==null){
+      if(opt===q.correctAnswer) cls+=' correct';
+      else if(opt===state.selected) cls+=' wrong';
+      else cls+=' faded';
+    }
+    const lbl=(state.selected!==null)?(opt===q.correctAnswer?'✓':(opt===state.selected?'✗':['A','B','C','D'][i])):['A','B','C','D'][i];
+    return `<button class="${cls}" ${state.selected!==null?'disabled':''} onclick="answer(${i})">
+      <span class="lbl">${lbl}</span><span ${rtl?'dir="rtl"':''}>${esc(optText(q,opt))}</span></button>`;
+  }).join('');
+
+  let explHtml='';
+  if(state.showExpl){
+    const isCorrect=state.selected===q.correctAnswer;
+    explHtml=`<div class="expl ${isCorrect?'good':'bad'}">
+      <div class="eh">${isCorrect?'✅ '+esc(t('good')):'💡 '+esc(t('expl'))}</div>
+      <div class="etext">${esc(q.explanation)}</div>
+      ${(!isFr && tq.explanation && tq.explanation!==q.explanation)?`<div class="qtr-row"><div class="etr" ${rtl?'dir="rtl"':''}>${esc(tq.explanation)}</div><button class="speak sm" title="${esc(curLang().name)}" onclick="ttsTransExpl(this)">🔊</button></div>`:''}
+    </div>
+    <button class="btn-primary" onclick="next()">${state.idx+1>=state.session.length?esc(t('seeResults')):esc(t('next'))} →</button>`;
+  }
+
+  app.innerHTML = `
+    <div class="qhead">
+      <button class="qquit" onclick="finish()">✕ ${esc(t('quit'))}</button>
+      <div class="qbar-wrap">
+        <div class="qbar"><i style="width:${progress}%"></i></div>
+        <div class="qbar-meta"><span>${esc(t('question'))} ${state.idx+1} / ${state.session.length}</span><b>${state.score} ${esc(t('correct'))}</b></div>
+      </div>
+      <div class="qtimer" id="timer" style="color:${timerColor()};border-color:${timerColor()}55">${fmtTime()}<span>${esc(t('remaining'))}</span></div>
+    </div>
+    ${qLangRow()}
+    <div class="pad">
+      <span class="cat ${isSitu?'situ':''}">${isSitu?'💡 ':''}${esc(q.category)}</span>
+      <div class="qcard">
+        <div class="qtop">
+          <div class="qfr">${esc(q.question)}</div>
+          <button class="speak" title="Écouter (FR)" onclick="ttsFR(this)">🔊</button>
+        </div>
+        ${(!isFr && tq.question && tq.question!==q.question)?`<div class="qtr-row"><div class="qtr" ${rtl?'dir="rtl"':''}>${esc(tq.question)}</div><button class="speak sm" title="${esc(curLang().name)}" onclick="ttsTransQ(this)">🔊</button></div>`:''}
+      </div>
+      <div class="opts">${optsHtml}</div>
+      ${explHtml}
+    </div>`;
+}
+function qLangRow(){
+  return `<div class="qlangrow">${LANGS.map(l=>
+    `<button class="lang-chip ${l.id===state.lang?'active':''}" onclick="setLang('${l.id}')">${l.flag} ${l.name}</button>`).join('')}</div>`;
+}
+
+// ---------- PAYWALL ----------
+const PW = {
+  header:{fr:"ACCÈS COMPLET",ru:"ПОЛНЫЙ ДОСТУП",uk:"ПОВНИЙ ДОСТУП",ar:"وصول كامل",tr:"TAM ERİŞİM",pt:"ACESSO COMPLETO",en:"FULL ACCESS"},
+  title:{fr:"Continuez le test",ru:"Продолжить тест",uk:"Продовжити тест",ar:"تابع الاختبار",tr:"Teste devam et",pt:"Continue o teste",en:"Continue the test"},
+  sub:{fr:"Les 15 premières questions sont offertes.",ru:"Первые 15 вопросов бесплатные.",uk:"Перші 15 питань безкоштовні.",ar:"أول 15 سؤالا مجانية.",tr:"İlk 15 soru ücretsizdir.",pt:"As primeiras 15 perguntas são gratuitas.",en:"The first 15 questions are free."},
+  feats:{
+    fr:["Accès aux 40 questions de chaque session","Modes CSP, CR et apprentissage","Explications et traduction pendant le test","Accès illimité après l'achat"],
+    ru:["Доступ ко всем 40 вопросам сессии","Режимы CSP, CR и обучение","Объяснения и перевод во время теста","Неограниченный доступ после покупки"],
+    uk:["Доступ до всіх 40 питань сесії","Режими CSP, CR і навчання","Пояснення і переклад під час тесту","Необмежений доступ після покупки"],
+    ar:["الوصول إلى 40 سؤالا في كل جلسة","أوضاع CSP و CR والدراسة","شرح وترجمة أثناء الاختبار","وصول غير محدود بعد الشراء"],
+    tr:["Her oturumdaki 40 soruya erişim","CSP, CR ve eğitim modları","Test sırasında açıklama ve çeviri","Satın alma sonrası sınırsız erişim"],
+    pt:["Acesso às 40 perguntas de cada sessão","Modos CSP, CR e estudo","Explicações e tradução durante o teste","Acesso ilimitado após a compra"],
+    en:["Access to all 40 questions in each session","CSP, CR and study modes","Explanations and translation during the test","Unlimited access after purchase"],
+  },
+  unlock:{fr:"DÉBLOQUER",ru:"ОТКРЫТЬ",uk:"ВІДКРИТИ",ar:"فتح",tr:"KİLİDİ AÇ",pt:"DESBLOQUEAR",en:"UNLOCK"},
+  restore:{fr:"Restaurer mes achats",ru:"Восстановить покупки",uk:"Відновити покупки",ar:"استعادة المشتريات",tr:"Satın almaları geri yükle",pt:"Restaurar compras",en:"Restore purchases"},
+  back:{fr:"Retour à l'accueil",ru:"На главную",uk:"На головну",ar:"العودة للرئيسية",tr:"Ana sayfaya dön",pt:"Voltar ao início",en:"Back to home"},
+  footer:{fr:"Paiement sécurisé par Stripe. Accès immédiat après l'achat.",ru:"Безопасная оплата через Stripe. Доступ сразу после покупки.",uk:"Безпечна оплата через Stripe. Доступ одразу після покупки.",ar:"دفع آمن عبر Stripe. وصول فوري بعد الشراء.",tr:"Stripe ile güvenli ödeme. Satın alma sonrası anında erişim.",pt:"Pagamento seguro via Stripe. Acesso imediato após a compra.",en:"Secure payment via Stripe. Instant access after purchase."},
+};
+function renderPaywall(){
+  clearInterval(state.timer);
+  if(window.speechSynthesis) speechSynthesis.cancel();
+  app.innerHTML = `<div class="wrap"><div class="pw">
+    <div class="eyebrow">${esc(ml(PW.header))}</div>
+    <h1 class="serif gold">${esc(ml(PW.title))}</h1>
+    <div class="sub">${esc(ml(PW.sub))}</div>
+    <div class="pw-feats">
+      ${ml(PW.feats).map(f=>`<div class="f"><span>✓</span> ${esc(f)}</div>`).join('')}
+    </div>
+    <button class="btn-primary" onclick="checkout()">${esc(ml(PW.unlock))} — ${esc(PRICE_LABEL)}</button>
+    <button class="ghost" onclick="restorePurchase()">${esc(ml(PW.restore))}</button>
+    <button class="ghost" onclick="goHome()">${esc(ml(PW.back))}</button>
+    <div class="price-note">${esc(ml(PW.footer))}</div>
+  </div></div>`;
+}
+function checkout(){
+  if(STRIPE_PAYMENT_LINK){
+    // mémorise la langue pour le retour, puis redirige vers Stripe
+    try{ localStorage.setItem(LS.lang, state.lang); }catch(e){}
+    window.location.href = STRIPE_PAYMENT_LINK;
+  } else {
+    alert("Stripe non configuré.\n\nAjoutez votre Payment Link dans index.html (constante STRIPE_PAYMENT_LINK) et définissez l'URL de succès sur :\n" + location.origin + location.pathname + "?paid=1");
+  }
+}
+function restorePurchase(){
+  if(loadAccess()){ grantAccess(); goHome(); }
+  else alert(ml({fr:"Aucun achat trouvé sur cet appareil.",ru:"Покупка на этом устройстве не найдена.",uk:"Покупку на цьому пристрої не знайдено.",ar:"لم يتم العثور على عملية شراء على هذا الجهاز.",tr:"Bu cihazda satın alma bulunamadı.",pt:"Nenhuma compra encontrada neste dispositivo.",en:"No purchase found on this device."}));
+}
+function answer(i){
+  if(state.selected!==null) return;
+  const q=state.session[state.idx];
+  const chosen=q._opts[i];
+  state.selected=chosen;
+  const ok=chosen===q.correctAnswer;
+  if(ok) state.score++;
+  state.answers.push({q, chosen, ok});
+  state.showExpl=true;
+  render();
+}
+function next(){
+  if(state.idx+1>=state.session.length){ finish(); return; }
+  state.idx++; state.selected=null; state.showExpl=false; render();
+}
+function finish(){
+  clearInterval(state.timer);
+  if(window.speechSynthesis) speechSynthesis.cancel();
+  recordResult();
+  state.view='result'; render();
+}
+function recordResult(){
+  const total=state.session.length; if(!total) return;
+  const pct=Math.round(state.score/total*100);
+  const s=state.stats;
+  s.completedTests+=1;
+  s.bestScorePercent=Math.max(s.bestScorePercent,pct);
+  s.lastScorePercent=pct;
+  s.totalAnswered+=total;
+  s.totalCorrect+=state.score;
+  saveStats();
+}
+
+// ---------- RESULT ----------
+function renderResult(){
+  const total=state.session.length;
+  const pct=Math.round(state.score/total*100);
+  const passed=pct>=80;
+  const wrong=state.answers.filter(a=>!a.ok);
+  app.innerHTML = langBar() + `<div class="wrap">
+    <div class="result">
+      <div class="rscore gold serif">${pct}%</div>
+      <div class="rverdict ${passed?'pass':'fail'}">${passed?'✅ '+esc(t('passed')):'❌ '+esc(t('failed'))}</div>
+      <div class="rsub">${esc(t('passInfo'))}</div>
+      <div class="rstats">
+        <div class="rstat"><div class="n" style="color:var(--green)">${state.score}</div><div class="l">${esc(t('good_n'))}</div></div>
+        <div class="rstat"><div class="n" style="color:var(--red)">${wrong.length}</div><div class="l">${esc(t('bad_n'))}</div></div>
+        <div class="rstat"><div class="n">${total}</div><div class="l">${esc(t('total_n'))}</div></div>
+      </div>
+    </div>
+    ${wrong.length?`<div class="review-h">${esc(t('review'))}</div>`+wrong.map(a=>`
+      <div class="rev">
+        <div class="rq">${esc(a.q.question)}</div>
+        <div class="ra no">✗ ${esc(t('yourAns'))}: ${esc(optText(a.q,a.chosen))}</div>
+        <div class="ra ok">✓ ${esc(t('goodAns'))}: ${esc(optText(a.q,a.q.correctAnswer))}</div>
+      </div>`).join(''):''}
+    <div class="review-h" style="margin-top:22px">${esc(t('myProgress'))}</div>
+    <div class="rstats">
+      <div class="rstat"><div class="n gold">${state.stats.bestScorePercent}%</div><div class="l">${esc(t('best'))}</div></div>
+      <div class="rstat"><div class="n">${avgPercent()}%</div><div class="l">${esc(t('average'))}</div></div>
+      <div class="rstat"><div class="n">${state.stats.completedTests}</div><div class="l">${esc(t('tests'))}</div></div>
+    </div>
+    <button class="btn-primary" style="margin-top:14px" onclick="startQuiz('${state.mode}')">${esc(t('retry'))}</button>
+    <button class="ghost" onclick="goHome()">${esc(t('home'))}</button>
+    <div style="height:40px"></div>
+  </div>`;
+}
+function goHome(){ clearInterval(state.timer); if(window.speechSynthesis)speechSynthesis.cancel(); state.view='home'; render(); }
+
+// ---------- LEARNING ----------
+function openLearning(){ state.view='learnList'; render(); }
+function renderLearnList(){
+  app.innerHTML = langBar() + `<div class="wrap">
+    <div class="hero" style="padding:20px 0 6px">
+      <h1 class="serif gold" style="font-size:30px">📖 ${esc(ml(MODES.learning.title))}</h1>
+      <p>${esc(ml(MODES.learning.sub))}</p>
+    </div>
+    <div style="padding:18px 0 40px">
+      ${D.learning.map((tp,i)=>`
+        <button class="topic" onclick="openTopic(${i})">
+          <span><span class="tt">${esc(ml(tp.title))}</span><br><span class="ts">${esc(ml(tp.subtitle))}</span></span>
+          <span class="arr">→</span>
+        </button>`).join('')}
+      <button class="ghost" onclick="goHome()">${esc(t('home'))}</button>
+    </div>
+  </div>`;
+}
+function openTopic(i){ state.topic=i; state.view='learnTopic'; render(); }
+function renderLearnTopic(){
+  const tp=D.learning[state.topic];
+  app.innerHTML = `<button class="backlink" onclick="openLearning()">← ${esc(t('back'))}</button>
+  <div class="wrap">
+    <div class="hero" style="padding:6px 0 14px;text-align:left">
+      <h1 class="serif gold" style="font-size:28px">${esc(ml(tp.title))}</h1>
+      <p style="margin:6px 0 0">${esc(ml(tp.subtitle))}</p>
+    </div>
+    <div style="padding-bottom:50px">
+      ${tp.sections.map((s,i)=>`
+        <div class="section">
+          <div class="sh">
+            <div class="st" ${state.lang==='ar'?'dir="rtl"':''}>${esc(ml(s.title))}</div>
+            <button class="speak" onclick="ttsSection(${i}, this)">🔊</button>
+          </div>
+          <div class="sx" ${state.lang==='ar'?'dir="rtl"':''}>${esc(ml(s.text))}</div>
+        </div>`).join('')}
+    </div>
+  </div>`;
+}
+
+// boot
+(function init(){
+  state.fullAccess = loadAccess();
+  state.lang = loadLang();
+  state.stats = loadStats();
+  // retour de paiement Stripe (success URL = .../?paid=1)
+  const params = new URLSearchParams(location.search);
+  if(params.get('paid')==='1'){
+    grantAccess();
+    history.replaceState({}, '', location.pathname);
+  }
+  // Premier écran : onboarding affiché à chaque ouverture du site
+  state.view = 'intro';
+})();
+render();
+</script>
+</body>
+</html>
