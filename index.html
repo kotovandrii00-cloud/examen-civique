@@ -26,7 +26,7 @@
   .hidden{display:none !important;}
 
   /* lang bar */
-  .langbar{display:flex;gap:6px;overflow-x:auto;padding:14px 18px;-ms-overflow-style:none;scrollbar-width:none;}
+  .langbar{display:flex;gap:6px;overflow-x:auto;padding:14px 64px 14px 18px;-ms-overflow-style:none;scrollbar-width:none;}
   .langbar::-webkit-scrollbar{display:none;}
   .lang-chip{white-space:nowrap;font-size:12px;font-weight:500;padding:7px 12px;border-radius:99px;
     background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(242,235,224,.45);}
@@ -85,20 +85,75 @@
   .pw-feats .f{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:rgba(242,235,224,.62);padding:6px 0;}
   .pw-feats .f span{color:var(--gold1);flex-shrink:0;}
   .pw .price-note{font-size:12px;color:rgba(242,235,224,.35);margin-top:14px;line-height:1.5;}
+  .pw-price{font-size:14px;color:var(--gold2);font-weight:700;margin-bottom:16px;}
+  .pw-buy{display:flex;justify-content:center;margin-bottom:10px;min-height:48px;}
 
-  /* INTRO / ONBOARDING */
-  .intro{text-align:center;padding:26px 0 44px;}
-  .intro .art{display:flex;justify-content:center;margin:8px 0 22px;}
-  .intro .art svg{filter:drop-shadow(0 18px 40px rgba(201,168,77,.22));}
-  .intro .eyebrow{font-size:11px;letter-spacing:4px;font-weight:700;color:rgba(201,168,77,.85);text-transform:uppercase;margin-bottom:14px;}
-  .intro h1{font-size:42px;font-weight:900;line-height:1.05;margin-bottom:14px;}
-  .intro .lead{color:rgba(242,235,224,.6);font-size:16px;line-height:1.55;max-width:480px;margin:0 auto 26px;}
-  .intro-pts{text-align:left;max-width:440px;margin:0 auto 28px;display:flex;flex-direction:column;gap:12px;}
-  .intro-pts .p{display:flex;gap:13px;align-items:flex-start;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:14px 16px;}
-  .intro-pts .p .ic{font-size:22px;flex-shrink:0;line-height:1.2;}
-  .intro-pts .p .tx b{display:block;font-size:15px;margin-bottom:2px;}
-  .intro-pts .p .tx span{font-size:13px;color:rgba(242,235,224,.5);line-height:1.45;}
-  .dl-title{font-size:13px;letter-spacing:1px;text-transform:uppercase;color:rgba(242,235,224,.4);font-weight:700;margin:6px 0 12px;}
+  /* INTRO — accueil type landing (texte + maquette téléphone) */
+  .intro2{min-height:100dvh;display:flex;flex-direction:column;}
+  .intro2-top{display:flex;gap:8px;align-items:center;padding:14px 66px 4px 20px;max-width:1120px;margin:0 auto;width:100%;}
+  .intro2-langs{display:flex;gap:6px;overflow-x:auto;flex:1;scrollbar-width:none;}
+  .intro2-langs::-webkit-scrollbar{display:none;}
+  .intro2-skip{flex-shrink:0;font-size:12px;color:rgba(242,235,224,.45);padding:7px 11px;border:1px solid rgba(255,255,255,.08);border-radius:99px;background:rgba(255,255,255,.05);}
+  .intro2-hero{flex:1;display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:center;max-width:1120px;margin:0 auto;width:100%;padding:18px 24px 44px;}
+  .intro2-text .eyebrow{font-size:11px;letter-spacing:3.5px;font-weight:700;color:rgba(201,168,77,.85);text-transform:uppercase;margin-bottom:16px;}
+  .intro2-text h1{font-size:clamp(34px,5vw,58px);font-weight:900;line-height:1.04;letter-spacing:-1px;margin:0 0 18px;}
+  .intro2-text .lead{font-size:clamp(15px,1.5vw,18px);line-height:1.55;color:rgba(242,235,224,.6);max-width:520px;margin:0 0 26px;}
+  .intro2-cta{max-width:340px;margin-bottom:12px;}
+  .intro2-offer{font-size:13.5px;color:rgba(242,235,224,.55);margin:0 0 22px;line-height:1.45;}
+  .intro2-offer b{color:var(--gold2);font-weight:700;}
+  .stats2{display:flex;gap:30px;flex-wrap:wrap;margin-bottom:26px;}
+  .stats2 .s .n{font-size:26px;font-weight:800;line-height:1;}
+  .stats2 .s .l{font-size:12px;color:rgba(242,235,224,.45);margin-top:3px;}
+  .intro2 .badges{justify-content:flex-start;}
+  .intro2-phone{display:flex;justify-content:center;perspective:1700px;}
+  .intro2-phone .pm-phone{transform:rotateY(-18deg) rotateX(4deg) rotateZ(1.5deg);transform-style:preserve-3d;
+    box-shadow:-30px 40px 90px rgba(0,0,0,.65),0 0 0 1px rgba(255,255,255,.05);transition:transform .5s ease;}
+  .intro2-phone .pm-phone:hover{transform:rotateY(-6deg) rotateX(2deg);}
+  /* maquette téléphone */
+  .pm-phone{width:300px;border-radius:44px;padding:12px;background:linear-gradient(160deg,#23232e,#0c0c12);box-shadow:0 40px 90px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.05);position:relative;}
+  .pm-notch{position:absolute;top:20px;left:50%;transform:translateX(-50%);width:108px;height:24px;background:#000;border-radius:99px;z-index:3;}
+  .pm-screen{border-radius:32px;overflow:hidden;height:662px;background:linear-gradient(160deg,#0b0a15,#100f1d 60%,#0a0d1a);padding:11px 13px 0;}
+  .hm-status{display:flex;align-items:center;justify-content:space-between;font-size:10px;font-weight:600;color:rgba(255,255,255,.85);padding:2px 4px 0;}
+  .hm-status .r{display:flex;align-items:center;gap:4px;font-size:9px;letter-spacing:.5px;}
+  .hm-flag{display:flex;gap:4px;justify-content:center;margin:9px 0 4px;}
+  .hm-flag i{width:15px;height:3px;border-radius:2px;display:block;}
+  .hm-eyebrow{text-align:center;font-size:7px;letter-spacing:2.5px;font-weight:700;color:rgba(242,235,224,.4);text-transform:uppercase;}
+  .hm-title{text-align:center;font-family:Georgia,serif;font-weight:900;font-size:25px;line-height:1.0;margin:3px 0;
+    background:linear-gradient(120deg,#F2EBE0,var(--gold1),var(--gold2));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .hm-sub{text-align:center;font-style:italic;font-size:10px;color:rgba(242,235,224,.4);margin-bottom:9px;}
+  .hm-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-bottom:9px;}
+  .hm-stat{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:11px;padding:7px 2px;text-align:center;}
+  .hm-stat .e{font-size:13px;}
+  .hm-stat .n{font-size:12px;font-weight:800;color:var(--gold2);margin-top:1px;}
+  .hm-stat .l{font-size:6px;color:rgba(242,235,224,.45);margin-top:1px;letter-spacing:.2px;}
+  .hm-prog{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:13px;padding:9px 10px;margin-bottom:9px;}
+  .hm-prog .h{font-size:6.5px;letter-spacing:2px;color:rgba(242,235,224,.4);font-weight:700;text-transform:uppercase;margin-bottom:7px;}
+  .hm-prog .row{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;}
+  .hm-prog .c{text-align:center;}
+  .hm-prog .c .e{font-size:12px;}
+  .hm-prog .c .n{font-size:12px;font-weight:800;color:var(--gold2);}
+  .hm-prog .c .l{font-size:6.5px;color:rgba(242,235,224,.45);}
+  .hm-prog .revoir{font-size:7.5px;color:rgba(242,235,224,.5);margin-top:7px;padding-top:7px;border-top:1px solid rgba(255,255,255,.06);}
+  .hm-label{font-size:6.5px;letter-spacing:2px;color:rgba(242,235,224,.4);font-weight:700;text-transform:uppercase;margin:4px 0 5px;}
+  .hm-modes{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;}
+  .hm-mode{border-radius:11px;padding:9px 3px;text-align:center;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);}
+  .hm-mode .e{font-size:14px;}
+  .hm-mode .t{font-size:10px;font-weight:800;margin-top:1px;color:var(--cream);}
+  .hm-mode.active{background:linear-gradient(135deg,var(--gold3),var(--gold2));border-color:transparent;}
+  .hm-mode.active .t{color:#1a1306;}
+  .hm-modecap{font-style:italic;font-size:8px;color:rgba(242,235,224,.4);margin:5px 0 9px;}
+  .hm-langs{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:9px;}
+  .hm-lang{font-size:8.5px;padding:5px 8px;border-radius:99px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:rgba(242,235,224,.5);}
+  .hm-lang.active{background:rgba(201,168,77,.18);border-color:rgba(201,168,77,.5);color:var(--gold2);}
+  .hm-format{background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:9px 10px;margin-bottom:9px;}
+  .hm-format .h{font-size:6.5px;letter-spacing:2px;color:var(--gold1);font-weight:700;text-transform:uppercase;margin-bottom:6px;}
+  .hm-format .b{font-size:7.5px;color:rgba(242,235,224,.55);line-height:1.5;display:flex;gap:5px;margin-top:3px;}
+  .hm-format .b i{color:var(--gold1);font-style:normal;}
+  .hm-start{text-align:center;font-family:Georgia,serif;font-size:12px;font-weight:800;letter-spacing:1px;color:#1a1306;
+    padding:12px;border-radius:12px;background:linear-gradient(90deg,var(--gold3),var(--gold2),var(--gold1));box-shadow:0 8px 20px rgba(201,168,77,.3);margin-bottom:8px;}
+  .hm-search{display:flex;align-items:center;justify-content:space-between;font-size:9px;color:rgba(242,235,224,.4);
+    padding:10px 13px;border-radius:99px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);}
+  .dl-title{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:rgba(242,235,224,.4);font-weight:700;margin:6px 0 10px;}
 
   /* STORE BADGES */
   .badges{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
@@ -110,6 +165,15 @@
   .store-badge .big{font-size:17px;font-weight:600;color:#fff;}
   .badges-note{font-size:11px;color:rgba(242,235,224,.3);margin-top:12px;}
   .home-dl{margin:26px 0 6px;text-align:center;}
+  /* téléphone / tablette : une seule colonne, maquette masquée */
+  @media (max-width:860px){
+    .intro2-hero{grid-template-columns:1fr;gap:24px;text-align:center;padding:14px 22px 40px;align-content:center;}
+    .intro2-text .lead{margin-left:auto;margin-right:auto;}
+    .intro2-cta{margin-left:auto;margin-right:auto;}
+    .intro2 .badges{justify-content:center;}
+    .stats2{justify-content:center;gap:22px;}
+    .intro2-phone{display:none;}
+  }
   .opts{display:flex;flex-direction:column;gap:9px;margin-bottom:14px;}
   .opt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:13px 14px;border-radius:13px;font-size:14px;line-height:1.4;
     border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.04);color:rgba(217,210,200,.85);transition:all .18s ease;}
@@ -166,11 +230,61 @@
   .section .st{font-size:17px;font-weight:700;flex:1;}
   .section .sx{font-size:14px;line-height:1.6;color:rgba(217,210,200,.82);white-space:pre-wrap;}
   .backlink{display:inline-flex;align-items:center;gap:6px;font-size:14px;color:var(--gold1);padding:14px 18px;}
+
+  /* ACCOUNT BUTTON (coin haut-droit) */
+  #acct{position:fixed;top:14px;right:14px;z-index:120;}
+  .acct-btn{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;
+    color:var(--gold2);background:rgba(20,16,32,.7);border:1px solid rgba(201,168,77,.4);backdrop-filter:blur(8px);
+    box-shadow:0 6px 18px rgba(0,0,0,.4);transition:transform .12s,border-color .12s;}
+  .acct-btn:hover{transform:translateY(-1px);border-color:var(--gold2);}
+  .acct-btn.on{background:linear-gradient(135deg,var(--gold3),var(--gold2));border-color:transparent;color:#1a1306;}
+  .acct-ini{font-size:17px;font-weight:800;font-family:Georgia,serif;}
+  .acct-ok{position:absolute;right:-2px;bottom:-2px;width:15px;height:15px;border-radius:50%;background:var(--green);color:#06281a;
+    font-size:9px;font-weight:900;display:flex;align-items:center;justify-content:center;border:2px solid #0b0a15;}
+  .acct-menu{position:absolute;top:50px;right:0;width:246px;background:#14101f;border:1px solid rgba(201,168,77,.25);border-radius:16px;
+    padding:14px;box-shadow:0 20px 50px rgba(0,0,0,.6);}
+  .acct-email{font-size:13px;font-weight:700;color:var(--cream);word-break:break-all;margin-bottom:8px;}
+  .acct-status{font-size:11.5px;color:rgba(242,235,224,.5);padding:3px 0;}
+  .acct-status.ok{color:var(--green);}
+  .acct-status.warn{color:#E8C97A;}
+  .acct-mi{display:block;width:100%;text-align:left;font-size:13px;color:rgba(242,235,224,.75);padding:9px 10px;margin-top:6px;
+    border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);}
+  .acct-mi:hover{background:rgba(255,255,255,.08);}
+  .acct-mi.gold{color:#1a1306;font-weight:800;background:linear-gradient(90deg,var(--gold1),var(--gold2));border:none;text-align:center;}
+
+  /* AUTH SCREEN */
+  .auth{max-width:380px;margin:0 auto;padding:30px 0 50px;}
+  .auth h1{font-size:34px;font-weight:900;text-align:center;margin-bottom:8px;}
+  .auth-sub{text-align:center;color:rgba(242,235,224,.5);font-size:14px;margin-bottom:24px;}
+  .auth-info{background:rgba(110,232,171,.08);border:1px solid rgba(110,232,171,.25);color:var(--green);
+    font-size:13px;line-height:1.45;border-radius:12px;padding:12px 14px;margin-bottom:18px;text-align:center;}
+  .auth-field{margin-bottom:14px;}
+  .auth-field label{display:block;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(242,235,224,.45);font-weight:700;margin-bottom:7px;}
+  .auth-field input{width:100%;font-size:15px;color:var(--cream);background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.12);border-radius:13px;padding:14px 15px;outline:none;transition:border-color .15s;}
+  .auth-field input::placeholder{color:rgba(242,235,224,.28);}
+  .auth-field input:focus{border-color:var(--gold1);background:rgba(201,168,77,.06);}
+  .auth-err{background:rgba(252,163,163,.08);border:1px solid rgba(252,163,163,.3);color:var(--red);
+    font-size:13px;border-radius:12px;padding:11px 14px;margin-bottom:14px;text-align:center;}
+  .auth .btn-primary{margin-top:6px;}
+  .auth .ghost{margin-top:4px;}
+  .auth-sub{text-align:center;color:rgba(242,235,224,.5);font-size:14px;line-height:1.45;margin-bottom:20px;}
+  .auth-link{display:block;width:100%;text-align:center;font-size:13px;color:var(--gold1);padding:10px;margin-top:4px;background:none;border:none;}
+  .auth-link:hover{color:var(--gold2);}
+  /* flash toast */
+  #flash{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:center;pointer-events:none;}
+  .flash-toast{margin-top:14px;background:linear-gradient(135deg,var(--gold3),var(--gold2));color:#1a1306;font-size:13.5px;font-weight:700;
+    padding:11px 18px;border-radius:99px;box-shadow:0 10px 30px rgba(0,0,0,.4);animation:flashIn .3s ease;max-width:90%;text-align:center;}
+  @keyframes flashIn{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
 </style>
 </head>
 <body>
 <div id="app"></div>
+<div id="acct"></div>
+<div id="flash"></div>
 
+<script async src="https://js.stripe.com/v3/buy-button.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/appwrite@14.0.1/dist/iife/sdk.js"></script>
 <script src="data.js"></script>
 <script>
 const D = window.QUIZ_DATA;
@@ -231,9 +345,17 @@ const MODES = {
 // ============================================================
 const FREE_LIMIT = 15;                 // questions gratuites par session
 const STRIPE_PAYMENT_LINK = "";        // ← colle ici ton Stripe Payment Link (https://buy.stripe.com/...)
-const PRICE_LABEL = "4,99 €";          // prix affiché sur le paywall
+const PRICE_LABEL = "2,99 €";          // prix affiché sur le paywall
 const APP_STORE_URL   = "";            // ← lien App Store (https://apps.apple.com/app/idXXXXXXXX)
 const GOOGLE_PLAY_URL = "";            // ← lien Google Play (https://play.google.com/store/apps/details?id=com.examencivique.app)
+// --- Stripe Buy Button (clé publishable = publique, OK dans le code) ---
+const STRIPE_BUY_BUTTON_ID  = "buy_btn_1Tl7G7C076I4JphPCsKmEk5I";
+const STRIPE_PUBLISHABLE_KEY = "pk_live_51TjFcYC076I4JphPz9rcs3LX1meO1KjK8JbN2gvONYMHYr7x7umDnhnN95NvFHUS1HDiF06cjG37ymLPJtKsT6cO00KnZjrcNd";
+// --- Appwrite (compte + vérification d'accès) ---
+const APPWRITE_ENDPOINT = "https://fra.cloud.appwrite.io/v1";
+const APPWRITE_PROJECT  = "6a340050002044004a45";
+const APPWRITE_DB       = "main";
+const APPWRITE_COL      = "subscriptions";
 // ============================================================
 
 // ---- persistence (localStorage) ----
@@ -252,7 +374,49 @@ const state = {
   session:[], idx:0, score:0, answers:[], selected:null, showExpl:false,
   timeLeft:45*60, timer:null, topic:null,
   fullAccess:false, stats:Object.assign({}, DEFAULT_STATS),
+  user:null, sub:null, authMode:'login', authBusy:false, authMsg:'', authInfo:'', acctOpen:false,
+  recovery:null, flash:'',
 };
+
+// ---- Appwrite client ----
+const aw = { client:null, account:null, db:null, ready:false };
+function awInit(){
+  if(aw.ready) return true;
+  if(!window.Appwrite){ return false; }
+  try{
+    aw.client = new Appwrite.Client().setEndpoint(APPWRITE_ENDPOINT).setProject(APPWRITE_PROJECT);
+    aw.account = new Appwrite.Account(aw.client);
+    aw.db = new Appwrite.Databases(aw.client);
+    aw.ready = true;
+  }catch(e){ return false; }
+  return true;
+}
+function verifyUrl(){ return location.origin + location.pathname + '?verify=1'; }
+function recoveryUrl(){ return location.origin + location.pathname + '?recovery=1'; }
+// accès = abonnement actif (à vie: pas de date; abonnement: date future)
+function subActive(){
+  const s=state.sub; if(!s||s.status!=='active') return false;
+  if(s.currentPeriodEnd){ return new Date(s.currentPeriodEnd).getTime() > Date.now(); }
+  return true;
+}
+function refreshAccess(){ state.fullAccess = subActive() || loadAccess(); }
+async function awLoadUser(){
+  if(!awInit()) return;
+  try{ state.user = await aw.account.get(); }catch(e){ state.user=null; }
+  await awLoadSub();
+}
+async function awLoadSub(){
+  state.sub=null;
+  if(state.user){
+    try{ state.sub = await aw.db.getDocument(APPWRITE_DB, APPWRITE_COL, state.user.$id); }
+    catch(e){ state.sub=null; }
+  }
+  refreshAccess();
+}
+async function awLogout(){
+  try{ await aw.account.deleteSession('current'); }catch(e){}
+  state.user=null; state.sub=null; refreshAccess(); render();
+}
 
 function ml(obj){ return obj[state.lang]||obj.fr; }
 function curLang(){ return LANGS.find(l=>l.id===state.lang)||LANGS[0]; }
@@ -306,7 +470,53 @@ function render(){
   else if(state.view==='result') renderResult();
   else if(state.view==='learnList') renderLearnList();
   else if(state.view==='learnTopic') renderLearnTopic();
+  else if(state.view==='auth') renderAuth();
+  else if(state.view==='forgot') renderForgot();
+  else if(state.view==='reset') renderReset();
+  else if(state.view==='paywall') renderPaywall();
+  updateAcct();
   window.scrollTo(0,0);
+}
+// ---------- bouton compte (coin haut-droit) ----------
+function updateAcct(){
+  const el=document.getElementById('acct'); if(!el) return;
+  if(state.view==='auth' || state.view==='forgot' || state.view==='reset' || state.view==='quiz'){ el.innerHTML=''; return; }
+  const logged=!!state.user;
+  const verified=logged && state.user.emailVerification;
+  const initial=logged ? (state.user.email||'?').charAt(0).toUpperCase() : '';
+  el.innerHTML = `<button class="acct-btn ${logged?'on':''}" onclick="acctClick()" title="${logged?esc(state.user.email):esc(ml(AUTH.login))}">
+      ${logged ? `<span class="acct-ini">${esc(initial)}</span>${verified?'<span class="acct-ok">✓</span>':''}`
+               : `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>`}
+    </button>
+    ${state.acctOpen && logged ? acctMenu() : ''}`;
+}
+function acctMenu(){
+  const verified=state.user.emailVerification;
+  return `<div class="acct-menu">
+    <div class="acct-email">${esc(state.user.email)}</div>
+    <div class="acct-status ${verified?'ok':'warn'}">${verified
+      ? '✓ '+esc(ml({fr:'Email vérifié',ru:'Email подтверждён',uk:'Email підтверджено',ar:'تم تأكيد البريد',tr:'E-posta doğrulandı',pt:'Email verificado',en:'Email verified'}))
+      : '⚠ '+esc(ml({fr:'Email non vérifié',ru:'Email не подтверждён',uk:'Email не підтверджено',ar:'البريد غير مؤكد',tr:'E-posta doğrulanmadı',pt:'Email não verificado',en:'Email not verified'}))}</div>
+    <div class="acct-status ${state.fullAccess?'ok':''}">${state.fullAccess
+      ? '★ '+esc(ml({fr:'Accès complet actif',ru:'Полный доступ активен',uk:'Повний доступ активний',ar:'الوصول الكامل نشط',tr:'Tam erişim aktif',pt:'Acesso completo ativo',en:'Full access active'}))
+      : esc(ml({fr:'Accès gratuit (15 questions)',ru:'Бесплатно (15 вопросов)',uk:'Безкоштовно (15 питань)',ar:'مجاني (15 سؤالا)',tr:'Ücretsiz (15 soru)',pt:'Grátis (15 perguntas)',en:'Free (15 questions)'}))}</div>
+    ${!verified?`<button class="acct-mi" onclick="resendVerification()">${esc(ml({fr:'Renvoyer la vérification',ru:'Отправить подтверждение',uk:'Надіслати підтвердження',ar:'إعادة إرسال التحقق',tr:'Doğrulamayı gönder',pt:'Reenviar verificação',en:'Resend verification'}))}</button>`:''}
+    ${!state.fullAccess?`<button class="acct-mi gold" onclick="state.acctOpen=false;openPaywall()">${esc(ml(PW.unlock))} — ${esc(PRICE_LABEL)}</button>`:''}
+    <button class="acct-mi" onclick="awLogout2()">${esc(ml({fr:'Se déconnecter',ru:'Выйти',uk:'Вийти',ar:'تسجيل الخروج',tr:'Çıkış yap',pt:'Sair',en:'Log out'}))}</button>
+  </div>`;
+}
+function acctClick(){
+  if(!state.user){ openAuth('login'); return; }
+  state.acctOpen=!state.acctOpen; updateAcct();
+}
+function awLogout2(){ state.acctOpen=false; awLogout(); }
+function openPaywall(){ state.view='paywall'; render(); }
+let flashTimer=null;
+function showFlash(msg){
+  const el=document.getElementById('flash'); if(!el) return;
+  el.innerHTML=`<div class="flash-toast">✓ ${esc(msg)}</div>`;
+  clearTimeout(flashTimer);
+  flashTimer=setTimeout(()=>{ el.innerHTML=''; }, 4500);
 }
 
 function langBar(){
@@ -336,12 +546,13 @@ function renderHome(){
     </div>`:''}
     ${state.fullAccess?`<div style="text-align:center;font-size:13px;color:var(--green);margin-bottom:18px">✓ ${esc(ml({fr:'Accès complet activé',ru:'Полный доступ активирован',uk:'Повний доступ активовано',ar:'تم تفعيل الوصول الكامل',tr:'Tam erişim etkin',pt:'Acesso completo ativado',en:'Full access enabled'}))}</div>`:''}
     <div class="modes">
-      ${Object.keys(MODES).map(m=>`
-        <button class="mode-card" onclick="${m==='learning'?'openLearning()':`startQuiz('${m}')`}">
+      ${Object.keys(MODES).map(m=>{
+        const locked = m==='learning' && !state.fullAccess;
+        return `<button class="mode-card" onclick="${m==='learning'?'openLearning()':`startQuiz('${m}')`}">
           <span class="ico">${MODES[m].icon}</span>
           <span><span class="mt">${esc(ml(MODES[m].title))}</span><br><span class="ms">${esc(ml(MODES[m].sub))}</span></span>
-          <span class="arr">→</span>
-        </button>`).join('')}
+          <span class="arr">${locked?'🔒':'→'}</span>
+        </button>`;}).join('')}
     </div>
     <div class="home-dl">
       <div class="dl-title">${esc(ml(INTRO.dl))}</div>
@@ -366,6 +577,11 @@ const INTRO = {
     en:[["🏛️","100% official questions","True to the Ministry of the Interior exam (CSP & CR)."],["🌍","Translated in 6 languages + audio","Questions, answers and lessons with audio."],["💡","Every answer explained","Understand the rule, not just the right box."],["📈","Track your progress","Best and average score, test history."]],
   },
   cta:{fr:"Commencer",ru:"Начать",uk:"Почати",ar:"ابدأ",tr:"Başla",pt:"Começar",en:"Get started"},
+  startTest:{fr:"Commencer le test",ru:"Начать тест",uk:"Почати тест",ar:"ابدأ الاختبار",tr:"Teste başla",pt:"Começar o teste",en:"Start the test"},
+  statQ:{fr:"questions officielles",ru:"официальных вопросов",uk:"офіційних питань",ar:"سؤال رسمي",tr:"resmi soru",pt:"perguntas oficiais",en:"official questions"},
+  statLang:{fr:"langues de traduction",ru:"языков перевода",uk:"мов перекладу",ar:"لغات الترجمة",tr:"çeviri dili",pt:"idiomas de tradução",en:"translation languages"},
+  statSession:{fr:"questions par session",ru:"вопросов за сессию",uk:"питань за сесію",ar:"سؤال لكل جلسة",tr:"oturum başına soru",pt:"perguntas por sessão",en:"questions per session"},
+  pmQ:{fr:'« Liberté, égalité, fraternité », c\'est :',ru:'«Свобода, равенство, братство» — это:',uk:'«Свобода, рівність, братерство» — це:',ar:'«الحرية، المساواة، الأخوة» هي:',tr:'«Özgürlük, eşitlik, kardeşlik» şudur:',pt:'«Liberdade, igualdade, fraternidade» é:',en:'"Liberty, equality, fraternity" is:'},
   dl:{fr:"Aussi disponible en application",ru:"Также доступно в приложении",uk:"Також доступно в застосунку",ar:"متوفر أيضا كتطبيق",tr:"Uygulama olarak da mevcut",pt:"Também disponível como app",en:"Also available as an app"},
   skip:{fr:"Passer",ru:"Пропустить",uk:"Пропустити",ar:"تخطي",tr:"Geç",pt:"Pular",en:"Skip"},
 };
@@ -407,24 +623,72 @@ function heroArt(){
     </g>
   </svg>`;
 }
-function renderIntro(){
-  app.innerHTML = `<div class="langbar" style="justify-content:flex-end;padding-bottom:4px"><button class="lang-chip" onclick="finishIntro()">${esc(ml(INTRO.skip))} ✕</button></div>`
-   + langBar()
-   + `<div class="wrap"><div class="intro">
-      <div class="art">${heroArt()}</div>
-      <div class="eyebrow">${esc(ml(INTRO.eyebrow))}</div>
-      <h1 class="serif gold">${esc(ml(INTRO.title))}</h1>
-      <p class="lead">${esc(ml(INTRO.lead))}</p>
-      <div class="intro-pts">
-        ${ml(INTRO.pts).map(p=>`<div class="p"><span class="ic">${p[0]}</span><span class="tx"><b>${esc(p[1])}</b><span>${esc(p[2])}</span></span></div>`).join('')}
+function phoneMock(){
+  const L=ml; // raccourci
+  const langChips=[['🇫🇷','Français',true],['🇷🇺','Русский',false],['🇺🇦','Українська',false],['🇦🇪','العربية',false],['🇹🇷','Türkçe',false],['🇵🇹','Português',false],['🇬🇧','English',false]];
+  return `<div class="pm-phone"><div class="pm-notch"></div><div class="pm-screen">
+    <div class="hm-status"><span>19:52</span><span class="r">📶 5G 🔋</span></div>
+    <div class="hm-flag"><i style="background:#2B5CBF"></i><i style="background:#F2EBE0"></i><i style="background:#E0414E"></i></div>
+    <div class="hm-eyebrow">${esc(L({fr:'PRÉPARATION OFFICIELLE',ru:'ОФИЦИАЛЬНАЯ ПОДГОТОВКА',uk:'ОФІЦІЙНА ПІДГОТОВКА',ar:'تحضير رسمي',tr:'RESMİ HAZIRLIK',pt:'PREPARAÇÃO OFICIAL',en:'OFFICIAL PREPARATION'}))}</div>
+    <div class="hm-title">Examen<br>Civique</div>
+    <div class="hm-sub">Formation civique OFII</div>
+    <div class="hm-stats">
+      <div class="hm-stat"><div class="e">📚</div><div class="n">418</div><div class="l">${esc(L({fr:'Questions',ru:'Вопросов',uk:'Питань',ar:'أسئلة',tr:'Soru',pt:'Perguntas',en:'Questions'}))}</div></div>
+      <div class="hm-stat"><div class="e">🎯</div><div class="n">40</div><div class="l">${esc(L({fr:'Par session',ru:'За сессию',uk:'За сесію',ar:'لكل جلسة',tr:'Oturum',pt:'Por sessão',en:'Per session'}))}</div></div>
+      <div class="hm-stat"><div class="e">⏱️</div><div class="n">45</div><div class="l">Minutes</div></div>
+      <div class="hm-stat"><div class="e">✅</div><div class="n">80%</div><div class="l">${esc(L({fr:'Seuil réel',ru:'Порог',uk:'Поріг',ar:'الحد',tr:'Eşik',pt:'Limite',en:'Pass mark'}))}</div></div>
+    </div>
+    <div class="hm-prog">
+      <div class="h">${esc(L({fr:'VOTRE PROGRESSION',ru:'ВАШ ПРОГРЕСС',uk:'ВАШ ПРОГРЕС',ar:'تقدمك',tr:'İLERLEMENİZ',pt:'SEU PROGRESSO',en:'YOUR PROGRESS'}))}</div>
+      <div class="row">
+        <div class="c"><div class="e">🏁</div><div class="n">2</div><div class="l">${esc(L({fr:'Tests',ru:'Тестов',uk:'Тестів',ar:'اختبارات',tr:'Test',pt:'Testes',en:'Tests'}))}</div></div>
+        <div class="c"><div class="e">🏆</div><div class="n">20%</div><div class="l">${esc(L({fr:'Meilleur',ru:'Лучший',uk:'Найкращий',ar:'الأفضل',tr:'En iyi',pt:'Melhor',en:'Best'}))}</div></div>
+        <div class="c"><div class="e">📈</div><div class="n">16%</div><div class="l">${esc(L({fr:'Moyenne',ru:'Среднее',uk:'Середній',ar:'المتوسط',tr:'Ortalama',pt:'Média',en:'Average'}))}</div></div>
       </div>
-      <button class="btn-primary" onclick="finishIntro()">${esc(ml(INTRO.cta))} →</button>
-      <div class="home-dl">
+      <div class="revoir">🎯 ${esc(L({fr:'À revoir : Système institutionnel',ru:'Повторить: Система институтов',uk:'Повторити: Система інституцій',ar:'للمراجعة: النظام المؤسسي',tr:'Tekrar: Kurumsal sistem',pt:'Rever: Sistema institucional',en:'Review: Institutional system'}))}</div>
+    </div>
+    <div class="hm-label">Mode</div>
+    <div class="hm-modes">
+      <div class="hm-mode active"><div class="e">📋</div><div class="t">CSP</div></div>
+      <div class="hm-mode"><div class="e">🏅</div><div class="t">CR</div></div>
+      <div class="hm-mode"><div class="e">📖</div><div class="t">${esc(L(MODES.learning.title))}</div></div>
+    </div>
+    <div class="hm-modecap">${esc(L(MODES.csp.sub))}</div>
+    <div class="hm-label">${esc(L({fr:'Langue de traduction',ru:'Язык перевода',uk:'Мова перекладу',ar:'لغة الترجمة',tr:'Çeviri dili',pt:'Idioma de tradução',en:'Translation language'}))}</div>
+    <div class="hm-langs">${langChips.map(c=>`<span class="hm-lang ${c[2]?'active':''}">${c[0]} ${c[1]}</span>`).join('')}</div>
+    <div class="hm-format">
+      <div class="h">Format officiel OFII</div>
+      <div class="b"><i>›</i>${esc(L({fr:'Questions 100% officielles du Ministère',ru:'100% официальные вопросы МВД',uk:'100% офіційні питання МВС',ar:'أسئلة رسمية 100%',tr:'%100 resmi sorular',pt:'Perguntas 100% oficiais',en:'100% official questions'}))}</div>
+      <div class="b"><i>›</i>${esc(L({fr:'40 questions tirées aléatoirement',ru:'40 случайных вопросов',uk:'40 випадкових питань',ar:'40 سؤالا عشوائيا',tr:'40 rastgele soru',pt:'40 perguntas aleatórias',en:'40 random questions'}))}</div>
+      <div class="b"><i>›</i>${esc(L({fr:'Traduction locale en 6 langues',ru:'Перевод на 6 языков',uk:'Переклад 6 мовами',ar:'ترجمة إلى 6 لغات',tr:'6 dilde çeviri',pt:'Tradução em 6 idiomas',en:'Translation in 6 languages'}))}</div>
+    </div>
+    <div class="hm-start">${esc(L(INTRO.startTest)).toUpperCase()}</div>
+    <div class="hm-search"><span>🔍 ${esc(L({fr:'Rechercher une question',ru:'Найти вопрос',uk:'Знайти питання',ar:'ابحث عن سؤال',tr:'Soru ara',pt:'Pesquisar pergunta',en:'Search a question'}))}</span><span>›</span></div>
+  </div></div>`;
+}
+function renderIntro(){
+  app.innerHTML = `<div class="intro2">
+    <div class="intro2-top">
+      <div class="intro2-langs">${LANGS.map(l=>`<button class="lang-chip ${l.id===state.lang?'active':''}" onclick="setLang('${l.id}')">${l.flag} ${l.name}</button>`).join('')}</div>
+    </div>
+    <div class="intro2-hero">
+      <div class="intro2-text">
+        <div class="eyebrow">${esc(ml(INTRO.eyebrow))}</div>
+        <h1 class="serif gold">${esc(ml(INTRO.title))}</h1>
+        <p class="lead">${esc(ml(INTRO.lead))}</p>
+        <button class="btn-primary intro2-cta" onclick="finishIntro()">${esc(ml(INTRO.startTest))} →</button>
+        <div class="intro2-offer">Passez 15 questions gratuitement, ou obtenez l'<b>accès complet pour 2,99 €</b>.</div>
+        <div class="stats2">
+          <div class="s"><div class="n gold serif">418</div><div class="l">${esc(ml(INTRO.statQ))}</div></div>
+          <div class="s"><div class="n gold serif">6</div><div class="l">${esc(ml(INTRO.statLang))}</div></div>
+          <div class="s"><div class="n gold serif">40</div><div class="l">${esc(ml(INTRO.statSession))}</div></div>
+        </div>
         <div class="dl-title">${esc(ml(INTRO.dl))}</div>
         ${storeBadges()}
-        <div class="badges-note">${esc(ml({fr:"Les liens seront actifs après publication.",ru:"Ссылки заработают после публикации.",uk:"Посилання запрацюють після публікації.",ar:"ستعمل الروابط بعد النشر.",tr:"Bağlantılar yayından sonra çalışacak.",pt:"Os links funcionarão após a publicação.",en:"Links will work after publishing."}))}</div>
       </div>
-    </div></div>`;
+      <div class="intro2-phone">${phoneMock()}</div>
+    </div>
+  </div>`;
 }
 function finishIntro(){ try{localStorage.setItem('examen_intro_seen','1');}catch(e){} state.view='home'; render(); }
 
@@ -531,9 +795,24 @@ const PW = {
   back:{fr:"Retour à l'accueil",ru:"На главную",uk:"На головну",ar:"العودة للرئيسية",tr:"Ana sayfaya dön",pt:"Voltar ao início",en:"Back to home"},
   footer:{fr:"Paiement sécurisé par Stripe. Accès immédiat après l'achat.",ru:"Безопасная оплата через Stripe. Доступ сразу после покупки.",uk:"Безпечна оплата через Stripe. Доступ одразу після покупки.",ar:"دفع آمن عبر Stripe. وصول فوري بعد الشراء.",tr:"Stripe ile güvenli ödeme. Satın alma sonrası anında erişim.",pt:"Pagamento seguro via Stripe. Acesso imediato após a compra.",en:"Secure payment via Stripe. Instant access after purchase."},
 };
+function paywallRegister(){
+  openAuth('register', ml({fr:"Créez un compte pour débloquer l'accès complet.",ru:"Создайте аккаунт, чтобы открыть полный доступ.",uk:"Створіть акаунт, щоб відкрити повний доступ.",ar:"أنشئ حسابا لفتح الوصول الكامل.",tr:"Tam erişim için bir hesap oluşturun.",pt:"Crie uma conta para desbloquear o acesso completo.",en:"Create an account to unlock full access."}));
+}
+function buyButtonHtml(){
+  return `<div class="pw-buy"><stripe-buy-button
+      buy-button-id="${STRIPE_BUY_BUTTON_ID}"
+      publishable-key="${STRIPE_PUBLISHABLE_KEY}"
+      client-reference-id="${esc(state.user.$id)}"
+      customer-email="${esc(state.user.email||'')}">
+    </stripe-buy-button></div>`;
+}
 function renderPaywall(){
   clearInterval(state.timer);
   if(window.speechSynthesis) speechSynthesis.cancel();
+  const loggedIn = !!state.user;
+  const action = loggedIn
+    ? buyButtonHtml()
+    : `<button class="btn-primary" onclick="paywallRegister()">${esc(ml({fr:"Créer un compte pour débloquer",ru:"Создать аккаунт и открыть",uk:"Створити акаунт і відкрити",ar:"أنشئ حسابا للفتح",tr:"Hesap oluştur ve aç",pt:"Criar conta para desbloquear",en:"Create an account to unlock"}))} →</button>`;
   app.innerHTML = `<div class="wrap"><div class="pw">
     <div class="eyebrow">${esc(ml(PW.header))}</div>
     <h1 class="serif gold">${esc(ml(PW.title))}</h1>
@@ -541,24 +820,158 @@ function renderPaywall(){
     <div class="pw-feats">
       ${ml(PW.feats).map(f=>`<div class="f"><span>✓</span> ${esc(f)}</div>`).join('')}
     </div>
-    <button class="btn-primary" onclick="checkout()">${esc(ml(PW.unlock))} — ${esc(PRICE_LABEL)}</button>
-    <button class="ghost" onclick="restorePurchase()">${esc(ml(PW.restore))}</button>
+    <div class="pw-price">${esc(PRICE_LABEL)} / ${esc(ml({fr:'mois',ru:'мес',uk:'міс',ar:'شهر',tr:'ay',pt:'mês',en:'month'}))} · ${esc(ml({fr:'annulable à tout moment',ru:'отмена в любой момент',uk:'скасування будь-коли',ar:'يمكن الإلغاء في أي وقت',tr:'istediğiniz zaman iptal',pt:'cancele quando quiser',en:'cancel anytime'}))}</div>
+    ${action}
+    ${loggedIn?`<button class="ghost" onclick="restorePurchase()">${esc(ml(PW.restore))}</button>`:''}
     <button class="ghost" onclick="goHome()">${esc(ml(PW.back))}</button>
     <div class="price-note">${esc(ml(PW.footer))}</div>
   </div></div>`;
 }
 function checkout(){
+  // l'achat nécessite un compte (pour relier le paiement à l'utilisateur)
+  if(!state.user){ openAuth('register', ml({fr:"Créez un compte pour débloquer l'accès complet.",ru:"Создайте аккаунт, чтобы открыть полный доступ.",uk:"Створіть акаунт, щоб відкрити повний доступ.",ar:"أنشئ حسابا لفتح الوصول الكامل.",tr:"Tam erişim için bir hesap oluşturun.",pt:"Crie uma conta para desbloquear o acesso completo.",en:"Create an account to unlock full access."})); return; }
   if(STRIPE_PAYMENT_LINK){
-    // mémorise la langue pour le retour, puis redirige vers Stripe
     try{ localStorage.setItem(LS.lang, state.lang); }catch(e){}
-    window.location.href = STRIPE_PAYMENT_LINK;
+    const sep = STRIPE_PAYMENT_LINK.indexOf('?')>=0?'&':'?';
+    window.location.href = STRIPE_PAYMENT_LINK + sep + "client_reference_id=" + encodeURIComponent(state.user.$id) + "&prefilled_email=" + encodeURIComponent(state.user.email||'');
   } else {
-    alert("Stripe non configuré.\n\nAjoutez votre Payment Link dans index.html (constante STRIPE_PAYMENT_LINK) et définissez l'URL de succès sur :\n" + location.origin + location.pathname + "?paid=1");
+    alert(ml({fr:"Le paiement Stripe sera bientôt disponible.",ru:"Оплата Stripe скоро будет доступна.",uk:"Оплата Stripe скоро буде доступна.",ar:"الدفع عبر Stripe سيتوفر قريبا.",tr:"Stripe ödemesi yakında.",pt:"O pagamento Stripe estará disponível em breve.",en:"Stripe payment will be available soon."}));
   }
 }
-function restorePurchase(){
-  if(loadAccess()){ grantAccess(); goHome(); }
-  else alert(ml({fr:"Aucun achat trouvé sur cet appareil.",ru:"Покупка на этом устройстве не найдена.",uk:"Покупку на цьому пристрої не знайдено.",ar:"لم يتم العثور على عملية شراء على هذا الجهاز.",tr:"Bu cihazda satın alma bulunamadı.",pt:"Nenhuma compra encontrada neste dispositivo.",en:"No purchase found on this device."}));
+async function restorePurchase(){
+  if(!state.user){ openAuth('login'); return; }
+  await awLoadSub();
+  if(subActive()){ goHome(); }
+  else alert(ml({fr:"Aucun abonnement actif sur ce compte.",ru:"На этом аккаунте нет активной подписки.",uk:"На цьому акаунті немає активної підписки.",ar:"لا يوجد اشتراك نشط على هذا الحساب.",tr:"Bu hesapta aktif abonelik yok.",pt:"Nenhuma assinatura ativa nesta conta.",en:"No active subscription on this account."}));
+}
+
+// ---------- AUTH (Appwrite) ----------
+function openAuth(mode, info){ state.authMode=mode||'login'; state.authMsg=''; state.authInfo=info||''; state.view='auth'; render(); }
+function setAuthMode(m){ state.authMode=m; state.authMsg=''; render(); }
+function authErr(e){
+  const m=(e&&e.message)||'';
+  if(/Invalid credentials/i.test(m)) return ml({fr:"Email ou mot de passe incorrect.",ru:"Неверный email или пароль.",uk:"Невірний email або пароль.",ar:"البريد أو كلمة المرور غير صحيحة.",tr:"Email veya şifre yanlış.",pt:"Email ou senha incorretos.",en:"Wrong email or password."});
+  if(/already exists/i.test(m)) return ml({fr:"Un compte existe déjà avec cet email.",ru:"Аккаунт с этим email уже существует.",uk:"Акаунт з цим email вже існує.",ar:"يوجد حساب بهذا البريد بالفعل.",tr:"Bu email ile zaten bir hesap var.",pt:"Já existe uma conta com este email.",en:"An account with this email already exists."});
+  if(/Password must be/i.test(m)||/at least 8/i.test(m)) return ml({fr:"Mot de passe : 8 caractères minimum.",ru:"Пароль: минимум 8 символов.",uk:"Пароль: мінімум 8 символів.",ar:"كلمة المرور: 8 أحرف على الأقل.",tr:"Şifre: en az 8 karakter.",pt:"Senha: mínimo 8 caracteres.",en:"Password: at least 8 characters."});
+  return m || ml({fr:"Une erreur est survenue.",ru:"Произошла ошибка.",uk:"Сталася помилка.",ar:"حدث خطأ.",tr:"Bir hata oluştu.",pt:"Ocorreu um erro.",en:"An error occurred."});
+}
+async function doAuth(){
+  if(state.authBusy) return;
+  if(!awInit()){ state.authMsg="SDK Appwrite non chargé."; render(); return; }
+  const email=(document.getElementById('auth-email')||{}).value||'';
+  const pass=(document.getElementById('auth-pass')||{}).value||'';
+  if(!email||!pass){ state.authMsg=ml({fr:"Remplissez email et mot de passe.",ru:"Введите email и пароль.",uk:"Введіть email і пароль.",ar:"أدخل البريد وكلمة المرور.",tr:"Email ve şifre girin.",pt:"Preencha email e senha.",en:"Enter email and password."}); render(); return; }
+  state.authBusy=true; state.authMsg=''; render();
+  try{
+    if(state.authMode==='register'){
+      await aw.account.create(Appwrite.ID.unique(), email, pass);
+      await aw.account.createEmailPasswordSession(email, pass);
+      try{ await aw.account.createVerification(verifyUrl()); }catch(e){}
+      await awLoadUser();
+      state.authBusy=false;
+      goHome();
+      showFlash(ml(AUTH.checkEmail));
+    } else {
+      await aw.account.createEmailPasswordSession(email, pass);
+      await awLoadUser();
+      state.authBusy=false;
+      goHome();
+    }
+  }catch(e){ state.authBusy=false; state.authMsg=authErr(e); render(); }
+}
+async function resendVerification(){
+  if(!state.user) return;
+  try{ await aw.account.createVerification(verifyUrl()); alert(ml({fr:"Email de vérification renvoyé.",ru:"Письмо подтверждения отправлено повторно.",uk:"Лист підтвердження надіслано повторно.",ar:"تمت إعادة إرسال بريد التحقق.",tr:"Doğrulama e-postası tekrar gönderildi.",pt:"Email de verificação reenviado.",en:"Verification email resent."})); }
+  catch(e){ alert(authErr(e)); }
+}
+const AUTH = {
+  login:{fr:"Se connecter",ru:"Войти",uk:"Увійти",ar:"تسجيل الدخول",tr:"Giriş yap",pt:"Entrar",en:"Log in"},
+  register:{fr:"Créer un compte",ru:"Создать аккаунт",uk:"Створити акаунт",ar:"إنشاء حساب",tr:"Hesap oluştur",pt:"Criar conta",en:"Sign up"},
+  email:{fr:"Email",ru:"Email",uk:"Email",ar:"البريد الإلكتروني",tr:"E-posta",pt:"Email",en:"Email"},
+  pass:{fr:"Mot de passe",ru:"Пароль",uk:"Пароль",ar:"كلمة المرور",tr:"Şifre",pt:"Senha",en:"Password"},
+  noAcc:{fr:"Pas de compte ? S'inscrire",ru:"Нет аккаунта? Зарегистрироваться",uk:"Немає акаунта? Зареєструватися",ar:"لا حساب؟ سجل",tr:"Hesabın yok mu? Kayıt ol",pt:"Sem conta? Cadastre-se",en:"No account? Sign up"},
+  haveAcc:{fr:"Déjà un compte ? Se connecter",ru:"Уже есть аккаунт? Войти",uk:"Вже є акаунт? Увійти",ar:"لديك حساب؟ سجل الدخول",tr:"Hesabın var mı? Giriş yap",pt:"Já tem conta? Entrar",en:"Have an account? Log in"},
+  back:{fr:"Retour",ru:"Назад",uk:"Назад",ar:"رجوع",tr:"Geri",pt:"Voltar",en:"Back"},
+  forgot:{fr:"Mot de passe oublié ?",ru:"Забыли пароль?",uk:"Забули пароль?",ar:"نسيت كلمة المرور؟",tr:"Şifreni mi unuttun?",pt:"Esqueceu a senha?",en:"Forgot password?"},
+  forgotTitle:{fr:"Réinitialiser le mot de passe",ru:"Сброс пароля",uk:"Скидання пароля",ar:"إعادة تعيين كلمة المرور",tr:"Şifre sıfırlama",pt:"Redefinir senha",en:"Reset password"},
+  forgotSub:{fr:"Recevez un lien par email pour créer un nouveau mot de passe.",ru:"Получите ссылку на email для создания нового пароля.",uk:"Отримайте посилання на email для нового пароля.",ar:"احصل على رابط عبر البريد لإنشاء كلمة مرور جديدة.",tr:"Yeni şifre için e-posta ile bağlantı alın.",pt:"Receba um link por email para criar uma nova senha.",en:"Get a link by email to create a new password."},
+  send:{fr:"Envoyer le lien",ru:"Отправить ссылку",uk:"Надіслати посилання",ar:"إرسال الرابط",tr:"Bağlantı gönder",pt:"Enviar link",en:"Send link"},
+  forgotSent:{fr:"Si un compte existe, un email de réinitialisation a été envoyé. Vérifiez votre boîte mail.",ru:"Если аккаунт существует, письмо для сброса отправлено. Проверьте почту.",uk:"Якщо акаунт існує, лист для скидання надіслано. Перевірте пошту.",ar:"إذا كان الحساب موجودا، فقد تم إرسال بريد إعادة التعيين.",tr:"Hesap varsa, sıfırlama e-postası gönderildi. E-postanızı kontrol edin.",pt:"Se a conta existir, um email de redefinição foi enviado.",en:"If an account exists, a reset email was sent. Check your inbox."},
+  resetTitle:{fr:"Nouveau mot de passe",ru:"Новый пароль",uk:"Новий пароль",ar:"كلمة مرور جديدة",tr:"Yeni şifre",pt:"Nova senha",en:"New password"},
+  newPass:{fr:"Nouveau mot de passe",ru:"Новый пароль",uk:"Новий пароль",ar:"كلمة مرور جديدة",tr:"Yeni şifre",pt:"Nova senha",en:"New password"},
+  confirm:{fr:"Confirmer le mot de passe",ru:"Подтвердите пароль",uk:"Підтвердіть пароль",ar:"تأكيد كلمة المرور",tr:"Şifreyi onayla",pt:"Confirmar senha",en:"Confirm password"},
+  save:{fr:"Enregistrer",ru:"Сохранить",uk:"Зберегти",ar:"حفظ",tr:"Kaydet",pt:"Guardar",en:"Save"},
+  mismatch:{fr:"Les mots de passe ne correspondent pas.",ru:"Пароли не совпадают.",uk:"Паролі не збігаються.",ar:"كلمتا المرور غير متطابقتين.",tr:"Şifreler eşleşmiyor.",pt:"As senhas não coincidem.",en:"Passwords do not match."},
+  resetDone:{fr:"Mot de passe modifié ! Connectez-vous.",ru:"Пароль изменён! Войдите.",uk:"Пароль змінено! Увійдіть.",ar:"تم تغيير كلمة المرور! سجل الدخول.",tr:"Şifre değişti! Giriş yapın.",pt:"Senha alterada! Faça login.",en:"Password changed! Log in."},
+  verified:{fr:"Votre email a été vérifié ✓",ru:"Email подтверждён ✓",uk:"Email підтверджено ✓",ar:"تم تأكيد بريدك ✓",tr:"E-postanız doğrulandı ✓",pt:"Seu email foi verificado ✓",en:"Your email has been verified ✓"},
+  checkEmail:{fr:"Compte créé ! Un email de confirmation vous a été envoyé — cliquez le lien pour vérifier votre adresse.",ru:"Аккаунт создан! Письмо с подтверждением отправлено — перейдите по ссылке для подтверждения.",uk:"Акаунт створено! Лист підтвердження надіслано — перейдіть за посиланням.",ar:"تم إنشاء الحساب! تم إرسال بريد تأكيد — اضغط الرابط للتحقق.",tr:"Hesap oluşturuldu! Onay e-postası gönderildi — bağlantıya tıklayın.",pt:"Conta criada! Um email de confirmação foi enviado — clique no link.",en:"Account created! A confirmation email was sent — click the link to verify."},
+};
+function renderAuth(){
+  const isReg=state.authMode==='register';
+  app.innerHTML = `<button class="backlink" onclick="goHome()">← ${esc(ml(AUTH.back))}</button>
+  <div class="wrap"><div class="auth">
+    <h1 class="serif gold">${esc(ml(isReg?AUTH.register:AUTH.login))}</h1>
+    ${state.authInfo?`<div class="auth-info">${esc(state.authInfo)}</div>`:''}
+    <div class="auth-field"><label>${esc(ml(AUTH.email))}</label><input id="auth-email" type="email" autocomplete="email" inputmode="email" placeholder="vous@email.com"></div>
+    <div class="auth-field"><label>${esc(ml(AUTH.pass))}</label><input id="auth-pass" type="password" autocomplete="${isReg?'new-password':'current-password'}" placeholder="••••••••" onkeydown="if(event.key==='Enter')doAuth()"></div>
+    ${state.authMsg?`<div class="auth-err">${esc(state.authMsg)}</div>`:''}
+    <button class="btn-primary" ${state.authBusy?'disabled':''} onclick="doAuth()">${state.authBusy?'…':esc(ml(isReg?AUTH.register:AUTH.login))}</button>
+    ${!isReg?`<button class="auth-link" onclick="openForgot()">${esc(ml(AUTH.forgot))}</button>`:''}
+    <button class="ghost" onclick="setAuthMode('${isReg?'login':'register'}')">${esc(ml(isReg?AUTH.haveAcc:AUTH.noAcc))}</button>
+  </div></div>`;
+  setTimeout(()=>{ const el=document.getElementById('auth-email'); if(el) el.focus(); },30);
+}
+// ---- mot de passe oublié ----
+function openForgot(){ state.authMsg=''; state.authInfo=''; state.authBusy=false; state.view='forgot'; render(); }
+function renderForgot(){
+  app.innerHTML = `<button class="backlink" onclick="openAuth('login')">← ${esc(ml(AUTH.back))}</button>
+  <div class="wrap"><div class="auth">
+    <h1 class="serif gold">${esc(ml(AUTH.forgotTitle))}</h1>
+    <div class="auth-sub">${esc(ml(AUTH.forgotSub))}</div>
+    ${state.authInfo?`<div class="auth-info">${esc(state.authInfo)}</div>`:''}
+    <div class="auth-field"><label>${esc(ml(AUTH.email))}</label><input id="auth-email" type="email" autocomplete="email" inputmode="email" placeholder="vous@email.com" onkeydown="if(event.key==='Enter')doForgot()"></div>
+    ${state.authMsg?`<div class="auth-err">${esc(state.authMsg)}</div>`:''}
+    <button class="btn-primary" ${state.authBusy?'disabled':''} onclick="doForgot()">${state.authBusy?'…':esc(ml(AUTH.send))}</button>
+    <button class="ghost" onclick="openAuth('login')">${esc(ml(AUTH.login))}</button>
+  </div></div>`;
+  setTimeout(()=>{ const el=document.getElementById('auth-email'); if(el) el.focus(); },30);
+}
+async function doForgot(){
+  if(state.authBusy) return;
+  if(!awInit()){ state.authMsg="SDK Appwrite non chargé."; render(); return; }
+  const email=(document.getElementById('auth-email')||{}).value||'';
+  if(!email){ state.authMsg=ml(AUTH.email); render(); return; }
+  state.authBusy=true; state.authMsg=''; render();
+  try{
+    await aw.account.createRecovery(email, recoveryUrl());
+  }catch(e){ /* on ne révèle pas si l'email existe */ }
+  state.authBusy=false; state.authInfo=ml(AUTH.forgotSent); render();
+}
+// ---- nouveau mot de passe (depuis le lien email) ----
+function renderReset(){
+  app.innerHTML = `<button class="backlink" onclick="openAuth('login')">← ${esc(ml(AUTH.back))}</button>
+  <div class="wrap"><div class="auth">
+    <h1 class="serif gold">${esc(ml(AUTH.resetTitle))}</h1>
+    ${state.authInfo?`<div class="auth-info">${esc(state.authInfo)}</div>`:''}
+    <div class="auth-field"><label>${esc(ml(AUTH.newPass))}</label><input id="rp1" type="password" autocomplete="new-password" placeholder="••••••••"></div>
+    <div class="auth-field"><label>${esc(ml(AUTH.confirm))}</label><input id="rp2" type="password" autocomplete="new-password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doReset()"></div>
+    ${state.authMsg?`<div class="auth-err">${esc(state.authMsg)}</div>`:''}
+    <button class="btn-primary" ${state.authBusy?'disabled':''} onclick="doReset()">${state.authBusy?'…':esc(ml(AUTH.save))}</button>
+  </div></div>`;
+}
+async function doReset(){
+  if(state.authBusy) return;
+  if(!awInit()||!state.recovery){ state.authMsg=ml(AUTH.back); render(); return; }
+  const p1=(document.getElementById('rp1')||{}).value||'';
+  const p2=(document.getElementById('rp2')||{}).value||'';
+  if(p1.length<8){ state.authMsg=ml({fr:"Mot de passe : 8 caractères minimum.",ru:"Пароль: минимум 8 символов.",uk:"Пароль: мінімум 8 символів.",ar:"كلمة المرور: 8 أحرف على الأقل.",tr:"Şifre: en az 8 karakter.",pt:"Senha: mínimo 8 caracteres.",en:"Password: at least 8 characters."}); render(); return; }
+  if(p1!==p2){ state.authMsg=ml(AUTH.mismatch); render(); return; }
+  state.authBusy=true; state.authMsg=''; render();
+  try{
+    await aw.account.updateRecovery(state.recovery.userId, state.recovery.secret, p1, p1);
+    state.recovery=null; state.authBusy=false;
+    openAuth('login', ml(AUTH.resetDone));
+  }catch(e){ state.authBusy=false; state.authMsg=authErr(e); render(); }
 }
 function answer(i){
   if(state.selected!==null) return;
@@ -629,8 +1042,8 @@ function renderResult(){
 }
 function goHome(){ clearInterval(state.timer); if(window.speechSynthesis)speechSynthesis.cancel(); state.view='home'; render(); }
 
-// ---------- LEARNING ----------
-function openLearning(){ state.view='learnList'; render(); }
+// ---------- LEARNING (réservé aux abonnés) ----------
+function openLearning(){ if(!state.fullAccess){ openPaywall(); return; } state.view='learnList'; render(); }
 function renderLearnList(){
   app.innerHTML = langBar() + `<div class="wrap">
     <div class="hero" style="padding:20px 0 6px">
@@ -647,7 +1060,7 @@ function renderLearnList(){
     </div>
   </div>`;
 }
-function openTopic(i){ state.topic=i; state.view='learnTopic'; render(); }
+function openTopic(i){ if(!state.fullAccess){ openPaywall(); return; } state.topic=i; state.view='learnTopic'; render(); }
 function renderLearnTopic(){
   const tp=D.learning[state.topic];
   app.innerHTML = `<button class="backlink" onclick="openLearning()">← ${esc(t('back'))}</button>
@@ -670,20 +1083,33 @@ function renderLearnTopic(){
 }
 
 // boot
-(function init(){
+(async function init(){
   state.fullAccess = loadAccess();
   state.lang = loadLang();
   state.stats = loadStats();
-  // retour de paiement Stripe (success URL = .../?paid=1)
   const params = new URLSearchParams(location.search);
-  if(params.get('paid')==='1'){
-    grantAccess();
-    history.replaceState({}, '', location.pathname);
-  }
-  // Premier écran : onboarding affiché à chaque ouverture du site
+  if(params.get('paid')==='1'){ grantAccess(); history.replaceState({}, '', location.pathname); }
   state.view = 'intro';
+  render();
+  // Appwrite : lien email (vérification OU réinitialisation) + session + statut
+  if(awInit()){
+    const uid=params.get('userId'), secret=params.get('secret');
+    if(uid && secret && params.get('recovery')){
+      // lien de réinitialisation du mot de passe → écran "nouveau mot de passe"
+      state.recovery={userId:uid, secret:secret};
+      history.replaceState({}, '', location.pathname);
+      state.view='reset'; render();
+      return;
+    }
+    if(uid && secret){
+      // lien de confirmation de l'email
+      try{ await aw.account.updateVerification(uid, secret); showFlash(ml(AUTH.verified)); }catch(e){}
+      history.replaceState({}, '', location.pathname);
+    }
+    try{ await awLoadUser(); }catch(e){}
+    render();
+  }
 })();
-render();
 </script>
 </body>
 </html>
