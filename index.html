@@ -589,9 +589,9 @@ const SUPPORT_EMAIL = "support@testciviquefr.com";
 function siteFooter(){
   return `<div class="footer">
     <a class="foot-link" href="mailto:${SUPPORT_EMAIL}">✉️ ${esc(ml({fr:'Support',ru:'Поддержка',uk:'Підтримка',ar:'الدعم',tr:'Destek',pt:'Suporte',en:'Support'}))}</a>
-    <button class="foot-link" onclick="openLegal('cgv')">${esc(ml({fr:'Conditions',ru:'Условия',uk:'Умови',ar:'الشروط',tr:'Koşullar',pt:'Termos',en:'Terms'}))}</button>
-    <button class="foot-link" onclick="openLegal('privacy')">${esc(ml({fr:'Confidentialité',ru:'Конфиденциальность',uk:'Конфіденційність',ar:'الخصوصية',tr:'Gizlilik',pt:'Privacidade',en:'Privacy'}))}</button>
-    <button class="foot-link" onclick="openLegal('mentions')">${esc(ml({fr:'Mentions légales',ru:'Правовая информация',uk:'Правова інформація',ar:'إشعارات قانونية',tr:'Yasal',pt:'Aviso legal',en:'Legal notice'}))}</button>
+    <a class="foot-link" href="/terms/">${esc(ml({fr:'Conditions',ru:'Условия',uk:'Умови',ar:'الشروط',tr:'Koşullar',pt:'Termos',en:'Terms'}))}</a>
+    <a class="foot-link" href="/privacy/">${esc(ml({fr:'Confidentialité',ru:'Конфиденциальность',uk:'Конфіденційність',ar:'الخصوصية',tr:'Gizlilik',pt:'Privacidade',en:'Privacy'}))}</a>
+    <a class="foot-link" href="/mentions-legales/">${esc(ml({fr:'Mentions légales',ru:'Правовая информация',uk:'Правова інформація',ar:'إشعارات قانونية',tr:'Yasal',pt:'Aviso legal',en:'Legal notice'}))}</a>
     <div class="foot-note">© 2026 Examen Civique · ${esc(SUPPORT_EMAIL)} · ${esc(ml({fr:'Non affilié au Ministère de l’Intérieur / OFII.',ru:'Не аффилирован с МВД Франции / OFII.',uk:'Не афілійований з МВС Франції / OFII.',ar:'غير تابع لوزارة الداخلية / OFII.',tr:'İçişleri Bakanlığı / OFII ile bağlantılı değildir.',pt:'Não afiliado ao Ministério do Interior / OFII.',en:'Not affiliated with the Ministry of the Interior / OFII.'}))}</div>
   </div>`;
 }
@@ -606,11 +606,8 @@ const LEGAL = {
     <p><b>5. Droit de rétractation.</b> Le service donne accès à un contenu numérique immédiatement après l'achat. Conformément à l'article L221-28 du Code de la consommation, en validant l'achat vous demandez l'exécution immédiate et renoncez à votre droit de rétractation de 14 jours.</p>
     <p><b>6. Responsabilité.</b> Le contenu est fourni « en l'état » à des fins de révision ; nous ne garantissons pas la réussite à l'examen officiel.</p>`,
   privacy: `<h2>Politique de confidentialité</h2>
-    <p><b>Données collectées.</b> Pour créer un compte, nous collectons votre adresse email (et un mot de passe chiffré). La gestion des comptes est assurée par <b>Appwrite Cloud</b> (hébergement dans l'Union européenne — Francfort).</p>
-    <p><b>Paiement.</b> Les paiements sont gérés par <b>Stripe</b>. Nous ne stockons jamais vos données bancaires.</p>
-    <p><b>Stockage local.</b> Votre progression (scores) et votre session sont conservées dans le navigateur (localStorage).</p>
-    <p><b>Utilisation.</b> Vos données servent uniquement à fournir le service (compte, accès, support). Nous ne vendons ni ne louons vos données à des tiers.</p>
-    <p><b>Vos droits (RGPD).</b> Vous pouvez demander l'accès, la rectification ou la suppression de vos données, ainsi que la suppression de votre compte, en écrivant à ${'support@testciviquefr.com'}.</p>`,
+    <p>La politique complète décrit séparément le traitement des données sur le site et dans l'application iOS, les prestataires Appwrite, Stripe et Apple, le stockage local et vos droits RGPD.</p>
+    <p><a href="/privacy/">Consulter la politique de confidentialité complète →</a></p>`,
   mentions: `<h2>Mentions légales</h2>
     <p><b>Éditeur :</b> Examen Civique — micro-entrepreneur (France).</p>
     <p><b>Contact :</b> ${'support@testciviquefr.com'}</p>
@@ -897,8 +894,8 @@ function renderPaywall(){
     <button class="ghost" onclick="goHome()">${esc(ml(PW.back))}</button>
     <div class="price-note">${esc(ml(PW.footer))}</div>
     <div class="footer" style="margin-top:18px">
-      <button class="foot-link" onclick="openLegal('cgv')">${esc(ml({fr:'Conditions',ru:'Условия',uk:'Умови',ar:'الشروط',tr:'Koşullar',pt:'Termos',en:'Terms'}))}</button>
-      <button class="foot-link" onclick="openLegal('privacy')">${esc(ml({fr:'Confidentialité',ru:'Конфиденциальность',uk:'Конфіденційність',ar:'الخصوصية',tr:'Gizlilik',pt:'Privacidade',en:'Privacy'}))}</button>
+      <a class="foot-link" href="/terms/">${esc(ml({fr:'Conditions',ru:'Условия',uk:'Умови',ar:'الشروط',tr:'Koşullar',pt:'Termos',en:'Terms'}))}</a>
+      <a class="foot-link" href="/privacy/">${esc(ml({fr:'Confidentialité',ru:'Конфиденциальность',uk:'Конфіденційність',ar:'الخصوصية',tr:'Gizlilik',pt:'Privacidade',en:'Privacy'}))}</a>
       <a class="foot-link" href="mailto:${SUPPORT_EMAIL}">Support</a>
     </div>
   </div></div>`;
