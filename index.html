@@ -276,6 +276,22 @@
   .flash-toast{margin-top:14px;background:linear-gradient(135deg,var(--gold3),var(--gold2));color:#1a1306;font-size:13.5px;font-weight:700;
     padding:11px 18px;border-radius:99px;box-shadow:0 10px 30px rgba(0,0,0,.4);animation:flashIn .3s ease;max-width:90%;text-align:center;}
   @keyframes flashIn{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
+  /* FOOTER */
+  .footer{margin-top:30px;padding:22px 0 36px;border-top:1px solid rgba(255,255,255,.07);display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:center;align-items:center;}
+  .foot-link{font-size:13px;color:rgba(242,235,224,.55);background:none;border:none;padding:2px 0;text-decoration:none;cursor:pointer;}
+  .foot-link:hover{color:var(--gold2);}
+  .foot-note{width:100%;text-align:center;font-size:11px;color:rgba(242,235,224,.3);margin-top:8px;line-height:1.5;}
+  /* LEGAL */
+  .legal{max-width:680px;margin:0 auto;padding:6px 0 30px;}
+  .legal-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;}
+  .legal-tab{font-size:13px;color:rgba(242,235,224,.5);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:99px;padding:8px 14px;cursor:pointer;}
+  .legal-tab.active{background:rgba(201,168,77,.18);border-color:rgba(201,168,77,.5);color:var(--gold2);}
+  .legal-body h2{font-size:22px;font-weight:800;margin-bottom:14px;color:var(--cream);}
+  .legal-body p{font-size:14px;line-height:1.65;color:rgba(242,235,224,.7);margin-bottom:12px;}
+  .legal-body b{color:var(--cream);}
+  .legal-body i{color:rgba(232,201,122,.85);font-size:13px;}
+  .legal-contact{font-size:13px;color:rgba(242,235,224,.55);margin:18px 0 10px;padding-top:16px;border-top:1px solid rgba(255,255,255,.07);}
+  .legal-contact a,.foot-link[href]{color:var(--gold2);}
 </style>
 </head>
 <body>
@@ -375,7 +391,7 @@ const state = {
   timeLeft:45*60, timer:null, topic:null,
   fullAccess:false, stats:Object.assign({}, DEFAULT_STATS),
   user:null, sub:null, authMode:'login', authBusy:false, authMsg:'', authInfo:'', acctOpen:false,
-  recovery:null, flash:'',
+  recovery:null, flash:'', legalTab:'cgv',
 };
 
 // ---- Appwrite client ----
@@ -474,6 +490,7 @@ function render(){
   else if(state.view==='forgot') renderForgot();
   else if(state.view==='reset') renderReset();
   else if(state.view==='paywall') renderPaywall();
+  else if(state.view==='legal') renderLegal();
   updateAcct();
   window.scrollTo(0,0);
 }
@@ -533,7 +550,6 @@ function renderHome(){
       <p>${esc(ml(T.tagline))}</p>
     </div>
     <div class="home-info">
-      <div class="row"><b>🏛️</b> ${esc(ml({fr:'Questions 100% officielles du Ministère de l’Intérieur',ru:'Официальные вопросы Министерства внутренних дел',uk:'Офіційні питання Міністерства внутрішніх справ',ar:'أسئلة رسمية من وزارة الداخلية',tr:'İçişleri Bakanlığı resmi soruları',pt:'Perguntas oficiais do Ministério do Interior',en:'Official questions from the Ministry of the Interior'}))}</div>
       <div class="row"><b>⏱️</b> 40 questions · 45 min · ${esc(ml(T.passInfo))}</div>
       <div class="row"><b>🌍</b> ${esc(ml({fr:'Traduction locale en 6 langues + audio',ru:'Перевод на 6 языков + озвучка',uk:'Переклад 6 мовами + озвучення',ar:'ترجمة إلى 6 لغات + صوت',tr:'6 dilde çeviri + sesli',pt:'Tradução em 6 idiomas + áudio',en:'Translation in 6 languages + audio'}))}</div>
     </div>
@@ -558,27 +574,72 @@ function renderHome(){
       <div class="dl-title">${esc(ml(INTRO.dl))}</div>
       ${storeBadges()}
     </div>
-    <div style="height:24px"></div>
+    ${siteFooter()}
   </div>`;
+}
+const SUPPORT_EMAIL = "support@testciviquefr.com";
+function siteFooter(){
+  return `<div class="footer">
+    <a class="foot-link" href="mailto:${SUPPORT_EMAIL}">✉️ ${esc(ml({fr:'Support',ru:'Поддержка',uk:'Підтримка',ar:'الدعم',tr:'Destek',pt:'Suporte',en:'Support'}))}</a>
+    <button class="foot-link" onclick="openLegal('cgv')">${esc(ml({fr:'Conditions',ru:'Условия',uk:'Умови',ar:'الشروط',tr:'Koşullar',pt:'Termos',en:'Terms'}))}</button>
+    <button class="foot-link" onclick="openLegal('privacy')">${esc(ml({fr:'Confidentialité',ru:'Конфиденциальность',uk:'Конфіденційність',ar:'الخصوصية',tr:'Gizlilik',pt:'Privacidade',en:'Privacy'}))}</button>
+    <button class="foot-link" onclick="openLegal('mentions')">${esc(ml({fr:'Mentions légales',ru:'Правовая информация',uk:'Правова інформація',ar:'إشعارات قانونية',tr:'Yasal',pt:'Aviso legal',en:'Legal notice'}))}</button>
+    <div class="foot-note">© 2026 Examen Civique · ${esc(SUPPORT_EMAIL)} · ${esc(ml({fr:'Non affilié au Ministère de l’Intérieur / OFII.',ru:'Не аффилирован с МВД Франции / OFII.',uk:'Не афілійований з МВС Франції / OFII.',ar:'غير تابع لوزارة الداخلية / OFII.',tr:'İçişleri Bakanlığı / OFII ile bağlantılı değildir.',pt:'Não afiliado ao Ministério do Interior / OFII.',en:'Not affiliated with the Ministry of the Interior / OFII.'}))}</div>
+  </div>`;
+}
+function openLegal(tab){ state.legalTab=tab||'cgv'; state.view='legal'; render(); }
+// Contenu juridique (français — à compléter : nom de l'éditeur / statut)
+const LEGAL = {
+  cgv: `<h2>Conditions Générales d'Utilisation et de Vente</h2>
+    <p><b>1. Service.</b> Examen Civique est une application web d'entraînement à l'examen civique français (entretien d'assimilation / naturalisation). Les questions sont fournies à titre pédagogique. Le service n'est pas affilié au Ministère de l'Intérieur ni à l'OFII.</p>
+    <p><b>2. Accès gratuit et abonnement.</b> Les 15 premières questions de chaque session sont gratuites. L'accès complet (toutes les questions, mode Étude, traductions) est proposé par <b>abonnement de 2,99 € par mois</b>.</p>
+    <p><b>3. Paiement.</b> Le paiement est traité de manière sécurisée par <b>Stripe</b>. L'abonnement est <b>reconduit automatiquement</b> chaque mois jusqu'à résiliation.</p>
+    <p><b>4. Résiliation.</b> Vous pouvez résilier à tout moment depuis votre compte ou en écrivant à ${'support@testciviquefr.com'}. L'accès reste actif jusqu'à la fin de la période déjà payée ; aucun remboursement au prorata n'est dû.</p>
+    <p><b>5. Droit de rétractation.</b> Le service donne accès à un contenu numérique immédiatement après l'achat. Conformément à l'article L221-28 du Code de la consommation, en validant l'achat vous demandez l'exécution immédiate et renoncez à votre droit de rétractation de 14 jours.</p>
+    <p><b>6. Responsabilité.</b> Le contenu est fourni « en l'état » à des fins de révision ; nous ne garantissons pas la réussite à l'examen officiel.</p>`,
+  privacy: `<h2>Politique de confidentialité</h2>
+    <p><b>Données collectées.</b> Pour créer un compte, nous collectons votre adresse email (et un mot de passe chiffré). La gestion des comptes est assurée par <b>Appwrite Cloud</b> (hébergement dans l'Union européenne — Francfort).</p>
+    <p><b>Paiement.</b> Les paiements sont gérés par <b>Stripe</b>. Nous ne stockons jamais vos données bancaires.</p>
+    <p><b>Stockage local.</b> Votre progression (scores) et votre session sont conservées dans le navigateur (localStorage).</p>
+    <p><b>Utilisation.</b> Vos données servent uniquement à fournir le service (compte, accès, support). Nous ne vendons ni ne louons vos données à des tiers.</p>
+    <p><b>Vos droits (RGPD).</b> Vous pouvez demander l'accès, la rectification ou la suppression de vos données, ainsi que la suppression de votre compte, en écrivant à ${'support@testciviquefr.com'}.</p>`,
+  mentions: `<h2>Mentions légales</h2>
+    <p><b>Éditeur du site :</b> Examen Civique. <i>[À compléter : nom / raison sociale de l'éditeur, statut, et N° SIRET si applicable.]</i></p>
+    <p><b>Contact :</b> ${'support@testciviquefr.com'}</p>
+    <p><b>Hébergement du site :</b> <i>[À compléter selon votre hébergeur, ex. GitHub Pages / Netlify.]</i></p>
+    <p><b>Hébergement des données :</b> Appwrite Cloud (Union européenne).</p>
+    <p><b>Paiement :</b> Stripe Payments Europe.</p>
+    <p>Site indépendant, non affilié au Ministère de l'Intérieur ni à l'OFII.</p>`,
+};
+function renderLegal(){
+  const tabs=[['cgv','Conditions'],['privacy','Confidentialité'],['mentions','Mentions légales']];
+  app.innerHTML = `<button class="backlink" onclick="goHome()">← ${esc(ml({fr:'Retour',ru:'Назад',uk:'Назад',ar:'رجوع',tr:'Geri',pt:'Voltar',en:'Back'}))}</button>
+  <div class="wrap"><div class="legal">
+    <div class="legal-tabs">${tabs.map(t=>`<button class="legal-tab ${state.legalTab===t[0]?'active':''}" onclick="openLegal('${t[0]}')">${t[1]}</button>`).join('')}</div>
+    <div class="legal-body">${LEGAL[state.legalTab||'cgv']}</div>
+    <div class="legal-contact">${esc(ml({fr:'Une question ? Écrivez-nous :',ru:'Вопрос? Напишите нам:',uk:'Питання? Напишіть нам:',ar:'سؤال؟ راسلنا:',tr:'Soru mu var? Bize yazın:',pt:'Dúvida? Escreva-nos:',en:'A question? Email us:'}))} <a href="mailto:${SUPPORT_EMAIL}">${esc(SUPPORT_EMAIL)}</a></div>
+    <button class="ghost" onclick="goHome()">${esc(ml({fr:'Accueil',ru:'На главную',uk:'На головну',ar:'الرئيسية',tr:'Ana sayfa',pt:'Início',en:'Home'}))}</button>
+    <div style="height:30px"></div>
+  </div></div>`;
 }
 
 // ---------- INTRO / ONBOARDING ----------
 const INTRO = {
   eyebrow:{fr:"PRÉPARATION CIVIQUE",ru:"ГРАЖДАНСКИЙ ЭКЗАМЕН",uk:"ГРОМАДЯНСЬКИЙ ІСПИТ",ar:"الامتحان المدني",tr:"VATANDAŞLIK SINAVI",pt:"EXAME CÍVICO",en:"CIVIC EXAM"},
   title:{fr:"Réussissez votre examen civique",ru:"Сдайте гражданский экзамен",uk:"Складіть громадянський іспит",ar:"اجتز الامتحان المدني",tr:"Vatandaşlık sınavını geç",pt:"Aprove no exame cívico",en:"Pass your civic exam"},
-  lead:{fr:"Entraînez-vous gratuitement avec les questions officielles, comprenez chaque réponse et révisez dans votre langue — directement dans votre navigateur.",ru:"Готовьтесь бесплатно по официальным вопросам, понимайте каждый ответ и учитесь на своём языке — прямо в браузере.",uk:"Готуйтеся безкоштовно за офіційними питаннями, розумійте кожну відповідь і навчайтеся своєю мовою — прямо у браузері.",ar:"تدرب مجانا على الأسئلة الرسمية، افهم كل إجابة وراجع بلغتك — مباشرة في متصفحك.",tr:"Resmi sorularla ücretsiz çalışın, her cevabı anlayın ve kendi dilinizde tekrar edin — doğrudan tarayıcıda.",pt:"Pratique gratuitamente com perguntas oficiais, entenda cada resposta e estude no seu idioma — direto no navegador.",en:"Practice for free with official questions, understand every answer and study in your language — right in your browser."},
+  lead:{fr:"Entraînez-vous gratuitement aux questions de l'examen civique, comprenez chaque réponse et révisez dans votre langue — directement dans votre navigateur.",ru:"Готовьтесь бесплатно по вопросам гражданского экзамена, понимайте каждый ответ и учитесь на своём языке — прямо в браузере.",uk:"Готуйтеся безкоштовно за питаннями громадянського іспиту, розумійте кожну відповідь і навчайтеся своєю мовою — прямо у браузері.",ar:"تدرب مجانا على أسئلة الامتحان المدني، افهم كل إجابة وراجع بلغتك — مباشرة في متصفحك.",tr:"Vatandaşlık sınavı sorularıyla ücretsiz çalışın, her cevabı anlayın ve kendi dilinizde tekrar edin — doğrudan tarayıcıda.",pt:"Pratique gratuitamente com as perguntas do exame cívico, entenda cada resposta e estude no seu idioma — direto no navegador.",en:"Practice for free with the civic exam questions, understand every answer and study in your language — right in your browser."},
   pts:{
-    fr:[["🏛️","Questions 100% officielles","Fidèles à l'examen du Ministère de l'Intérieur (CSP & CR)."],["🌍","Traduit en 6 langues + audio","Question, réponses et cours traduits, avec lecture audio."],["💡","Chaque réponse expliquée","Comprenez la règle, pas seulement la bonne case."],["📈","Suivez votre progression","Meilleur score, moyenne et tests enregistrés."]],
-    ru:[["🏛️","100% официальные вопросы","Соответствуют экзамену МВД (CSP и CR)."],["🌍","Перевод на 6 языков + аудио","Вопросы, ответы и уроки с озвучкой."],["💡","Каждый ответ объяснён","Понимаете правило, а не просто верную клетку."],["📈","Отслеживайте прогресс","Лучший и средний результат, история тестов."]],
-    uk:[["🏛️","100% офіційні питання","Відповідають іспиту МВС (CSP і CR)."],["🌍","Переклад 6 мовами + аудіо","Питання, відповіді й уроки з озвученням."],["💡","Кожна відповідь пояснена","Розумієте правило, а не лише правильну клітинку."],["📈","Стежте за прогресом","Найкращий і середній результат, історія тестів."]],
-    ar:[["🏛️","أسئلة رسمية 100%","مطابقة لامتحان وزارة الداخلية (CSP و CR)."],["🌍","ترجمة إلى 6 لغات + صوت","أسئلة وإجابات ودروس مترجمة مع قراءة صوتية."],["💡","شرح لكل إجابة","افهم القاعدة وليس فقط الخانة الصحيحة."],["📈","تابع تقدمك","أفضل نتيجة ومتوسط وسجل الاختبارات."]],
-    tr:[["🏛️","%100 resmi sorular","İçişleri Bakanlığı sınavına uygun (CSP ve CR)."],["🌍","6 dilde çeviri + ses","Soru, cevap ve dersler sesli çeviriyle."],["💡","Her cevap açıklanır","Doğru kutuyu değil kuralı anlayın."],["📈","İlerlemenizi izleyin","En iyi ve ortalama skor, test geçmişi."]],
-    pt:[["🏛️","Perguntas 100% oficiais","Fiéis ao exame do Ministério do Interior (CSP e CR)."],["🌍","Tradução em 6 idiomas + áudio","Perguntas, respostas e aulas com áudio."],["💡","Cada resposta explicada","Entenda a regra, não só a opção certa."],["📈","Acompanhe o progresso","Melhor e média de pontuação, histórico."]],
-    en:[["🏛️","100% official questions","True to the Ministry of the Interior exam (CSP & CR)."],["🌍","Translated in 6 languages + audio","Questions, answers and lessons with audio."],["💡","Every answer explained","Understand the rule, not just the right box."],["📈","Track your progress","Best and average score, test history."]],
+    fr:[["📚","Toutes les questions CSP & CR","Principes, droits, histoire, société et situations pratiques."],["🌍","Traduit en 6 langues + audio","Question, réponses et cours traduits, avec lecture audio."],["💡","Chaque réponse expliquée","Comprenez la règle, pas seulement la bonne case."],["📈","Suivez votre progression","Meilleur score, moyenne et tests enregistrés."]],
+    ru:[["📚","Все вопросы CSP и CR","Принципы, права, история, общество и практические ситуации."],["🌍","Перевод на 6 языков + аудио","Вопросы, ответы и уроки с озвучкой."],["💡","Каждый ответ объяснён","Понимаете правило, а не просто верную клетку."],["📈","Отслеживайте прогресс","Лучший и средний результат, история тестов."]],
+    uk:[["📚","Усі питання CSP і CR","Принципи, права, історія, суспільство та практичні ситуації."],["🌍","Переклад 6 мовами + аудіо","Питання, відповіді й уроки з озвученням."],["💡","Кожна відповідь пояснена","Розумієте правило, а не лише правильну клітинку."],["📈","Стежте за прогресом","Найкращий і середній результат, історія тестів."]],
+    ar:[["📚","كل أسئلة CSP و CR","المبادئ والحقوق والتاريخ والمجتمع والمواقف العملية."],["🌍","ترجمة إلى 6 لغات + صوت","أسئلة وإجابات ودروس مترجمة مع قراءة صوتية."],["💡","شرح لكل إجابة","افهم القاعدة وليس فقط الخانة الصحيحة."],["📈","تابع تقدمك","أفضل نتيجة ومتوسط وسجل الاختبارات."]],
+    tr:[["📚","Tüm CSP ve CR soruları","İlkeler, haklar, tarih, toplum ve pratik durumlar."],["🌍","6 dilde çeviri + ses","Soru, cevap ve dersler sesli çeviriyle."],["💡","Her cevap açıklanır","Doğru kutuyu değil kuralı anlayın."],["📈","İlerlemenizi izleyin","En iyi ve ortalama skor, test geçmişi."]],
+    pt:[["📚","Todas as perguntas CSP e CR","Princípios, direitos, história, sociedade e situações práticas."],["🌍","Tradução em 6 idiomas + áudio","Perguntas, respostas e aulas com áudio."],["💡","Cada resposta explicada","Entenda a regra, não só a opção certa."],["📈","Acompanhe o progresso","Melhor e média de pontuação, histórico."]],
+    en:[["📚","All CSP & CR questions","Principles, rights, history, society and practical situations."],["🌍","Translated in 6 languages + audio","Questions, answers and lessons with audio."],["💡","Every answer explained","Understand the rule, not just the right box."],["📈","Track your progress","Best and average score, test history."]],
   },
   cta:{fr:"Commencer",ru:"Начать",uk:"Почати",ar:"ابدأ",tr:"Başla",pt:"Começar",en:"Get started"},
   startTest:{fr:"Commencer le test",ru:"Начать тест",uk:"Почати тест",ar:"ابدأ الاختبار",tr:"Teste başla",pt:"Começar o teste",en:"Start the test"},
-  statQ:{fr:"questions officielles",ru:"официальных вопросов",uk:"офіційних питань",ar:"سؤال رسمي",tr:"resmi soru",pt:"perguntas oficiais",en:"official questions"},
+  statQ:{fr:"questions d'examen",ru:"вопросов экзамена",uk:"питань іспиту",ar:"سؤال امتحان",tr:"sınav sorusu",pt:"perguntas do exame",en:"exam questions"},
   statLang:{fr:"langues de traduction",ru:"языков перевода",uk:"мов перекладу",ar:"لغات الترجمة",tr:"çeviri dili",pt:"idiomas de tradução",en:"translation languages"},
   statSession:{fr:"questions par session",ru:"вопросов за сессию",uk:"питань за сесію",ar:"سؤال لكل جلسة",tr:"oturum başına soru",pt:"perguntas por sessão",en:"questions per session"},
   pmQ:{fr:'« Liberté, égalité, fraternité », c\'est :',ru:'«Свобода, равенство, братство» — это:',uk:'«Свобода, рівність, братерство» — це:',ar:'«الحرية، المساواة، الأخوة» هي:',tr:'«Özgürlük, eşitlik, kardeşlik» şudur:',pt:'«Liberdade, igualdade, fraternidade» é:',en:'"Liberty, equality, fraternity" is:'},
@@ -658,7 +719,7 @@ function phoneMock(){
     <div class="hm-langs">${langChips.map(c=>`<span class="hm-lang ${c[2]?'active':''}">${c[0]} ${c[1]}</span>`).join('')}</div>
     <div class="hm-format">
       <div class="h">Format officiel OFII</div>
-      <div class="b"><i>›</i>${esc(L({fr:'Questions 100% officielles du Ministère',ru:'100% официальные вопросы МВД',uk:'100% офіційні питання МВС',ar:'أسئلة رسمية 100%',tr:'%100 resmi sorular',pt:'Perguntas 100% oficiais',en:'100% official questions'}))}</div>
+      <div class="b"><i>›</i>${esc(L({fr:'Questions CSP, CR et situations pratiques',ru:'Вопросы CSP, CR и практические ситуации',uk:'Питання CSP, CR і практичні ситуації',ar:'أسئلة CSP و CR ومواقف عملية',tr:'CSP, CR ve pratik durum soruları',pt:'Perguntas CSP, CR e situações práticas',en:'CSP, CR and practical-situation questions'}))}</div>
       <div class="b"><i>›</i>${esc(L({fr:'40 questions tirées aléatoirement',ru:'40 случайных вопросов',uk:'40 випадкових питань',ar:'40 سؤالا عشوائيا',tr:'40 rastgele soru',pt:'40 perguntas aleatórias',en:'40 random questions'}))}</div>
       <div class="b"><i>›</i>${esc(L({fr:'Traduction locale en 6 langues',ru:'Перевод на 6 языков',uk:'Переклад 6 мовами',ar:'ترجمة إلى 6 لغات',tr:'6 dilde çeviri',pt:'Tradução em 6 idiomas',en:'Translation in 6 languages'}))}</div>
     </div>
@@ -825,6 +886,11 @@ function renderPaywall(){
     ${loggedIn?`<button class="ghost" onclick="restorePurchase()">${esc(ml(PW.restore))}</button>`:''}
     <button class="ghost" onclick="goHome()">${esc(ml(PW.back))}</button>
     <div class="price-note">${esc(ml(PW.footer))}</div>
+    <div class="footer" style="margin-top:18px">
+      <button class="foot-link" onclick="openLegal('cgv')">${esc(ml({fr:'Conditions',ru:'Условия',uk:'Умови',ar:'الشروط',tr:'Koşullar',pt:'Termos',en:'Terms'}))}</button>
+      <button class="foot-link" onclick="openLegal('privacy')">${esc(ml({fr:'Confidentialité',ru:'Конфиденциальность',uk:'Конфіденційність',ar:'الخصوصية',tr:'Gizlilik',pt:'Privacidade',en:'Privacy'}))}</button>
+      <a class="foot-link" href="mailto:${SUPPORT_EMAIL}">Support</a>
+    </div>
   </div></div>`;
 }
 function checkout(){
