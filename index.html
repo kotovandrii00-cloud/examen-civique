@@ -360,8 +360,15 @@ const MODES = {
 //  CONFIGURATION — édite ces 2 lignes
 // ============================================================
 const FREE_LIMIT = 15;                 // questions gratuites par session
-const STRIPE_PAYMENT_LINK = "";        // ← colle ici ton Stripe Payment Link (https://buy.stripe.com/...)
 const PRICE_LABEL = "2,99 €";          // prix affiché sur le paywall
+// Mode TEST automatique sur localhost (Payment Link de test), boutons live en prod
+const ON_LOCALHOST = (location.hostname === 'localhost' || location.hostname === '127.0.0.1');
+const STRIPE_PAYMENT_LINK_TEST = "https://buy.stripe.com/test_4gMdR8gOWcCValc1Ds0RG00";
+const STRIPE_PAYMENT_LINK = ON_LOCALHOST ? STRIPE_PAYMENT_LINK_TEST : "";
+// Customer Portal (gérer / résilier l'abonnement)
+const STRIPE_PORTAL_LINK_TEST = "https://billing.stripe.com/p/login/test_4gMdR8gOWcCValc1Ds0RG00";
+const STRIPE_PORTAL_LINK_LIVE = "https://billing.stripe.com/p/login/4gMdR8gOWcCValc1Ds0RG00";
+const STRIPE_PORTAL_LINK = ON_LOCALHOST ? STRIPE_PORTAL_LINK_TEST : STRIPE_PORTAL_LINK_LIVE;
 const APP_STORE_URL   = "";            // ← lien App Store (https://apps.apple.com/app/idXXXXXXXX)
 const GOOGLE_PLAY_URL = "";            // ← lien Google Play (https://play.google.com/store/apps/details?id=com.examencivique.app)
 // --- Stripe Buy Button (clé publishable = publique, OK dans le code) ---
@@ -519,6 +526,7 @@ function acctMenu(){
       : esc(ml({fr:'Accès gratuit (15 questions)',ru:'Бесплатно (15 вопросов)',uk:'Безкоштовно (15 питань)',ar:'مجاني (15 سؤالا)',tr:'Ücretsiz (15 soru)',pt:'Grátis (15 perguntas)',en:'Free (15 questions)'}))}</div>
     ${!verified?`<button class="acct-mi" onclick="resendVerification()">${esc(ml({fr:'Renvoyer la vérification',ru:'Отправить подтверждение',uk:'Надіслати підтвердження',ar:'إعادة إرسال التحقق',tr:'Doğrulamayı gönder',pt:'Reenviar verificação',en:'Resend verification'}))}</button>`:''}
     ${!state.fullAccess?`<button class="acct-mi gold" onclick="state.acctOpen=false;openPaywall()">${esc(ml(PW.unlock))} — ${esc(PRICE_LABEL)}</button>`:''}
+    ${(state.fullAccess && STRIPE_PORTAL_LINK)?`<a class="acct-mi" href="${STRIPE_PORTAL_LINK}" target="_blank" rel="noopener">${esc(ml({fr:"Gérer / résilier l’abonnement",ru:"Управление / отмена подписки",uk:"Керування / скасування підписки",ar:"إدارة / إلغاء الاشتراك",tr:"Aboneliği yönet / iptal et",pt:"Gerir / cancelar assinatura",en:"Manage / cancel subscription"}))}</a>`:''}
     <button class="acct-mi" onclick="awLogout2()">${esc(ml({fr:'Se déconnecter',ru:'Выйти',uk:'Вийти',ar:'تسجيل الخروج',tr:'Çıkış yap',pt:'Sair',en:'Log out'}))}</button>
   </div>`;
 }
@@ -871,9 +879,11 @@ function renderPaywall(){
   clearInterval(state.timer);
   if(window.speechSynthesis) speechSynthesis.cancel();
   const loggedIn = !!state.user;
-  const action = loggedIn
-    ? buyButtonHtml()
-    : `<button class="btn-primary" onclick="paywallRegister()">${esc(ml({fr:"Créer un compte pour débloquer",ru:"Создать аккаунт и открыть",uk:"Створити акаунт і відкрити",ar:"أنشئ حسابا للفتح",tr:"Hesap oluştur ve aç",pt:"Criar conta para desbloquear",en:"Create an account to unlock"}))} →</button>`;
+  const action = !loggedIn
+    ? `<button class="btn-primary" onclick="paywallRegister()">${esc(ml({fr:"Créer un compte pour débloquer",ru:"Создать аккаунт и открыть",uk:"Створити акаунт і відкрити",ar:"أنشئ حسابا للفتح",tr:"Hesap oluştur ve aç",pt:"Criar conta para desbloquear",en:"Create an account to unlock"}))} →</button>`
+    : (STRIPE_PAYMENT_LINK
+        ? `<button class="btn-primary" onclick="checkout()">${esc(ml(PW.unlock))} — ${esc(PRICE_LABEL)}${ON_LOCALHOST?' (TEST)':''}</button>`
+        : buyButtonHtml());
   app.innerHTML = `<div class="wrap"><div class="pw">
     <div class="eyebrow">${esc(ml(PW.header))}</div>
     <h1 class="serif gold">${esc(ml(PW.title))}</h1>
